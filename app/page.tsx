@@ -1,3 +1,7 @@
+import Countdown from "../components/Countdown";
+import Gallery from "../components/Gallery";
+import Calendar from "../components/Calendar";
+
 export default function Home() {
   return (
     <>
@@ -61,36 +65,7 @@ export default function Home() {
     
     
     
-    <section id="countdown" className="countdown-section">
-        <div className="container text-center">
-            <div className="countdown-container">
-                <h2 className="countdown-title">Próximo Gran Evento</h2>
-                <p className="countdown-event-name" id="countdownEventName">Cena de Gala Anual</p>
-                <div className="countdown-timer" id="countdownTimer">
-                    <div className="countdown-unit">
-                        <div className="countdown-value" id="countdownDays">00</div>
-                        <div className="countdown-label">Días</div>
-                    </div>
-                    <div className="countdown-separator">:</div>
-                    <div className="countdown-unit">
-                        <div className="countdown-value" id="countdownHours">00</div>
-                        <div className="countdown-label">Horas</div>
-                    </div>
-                    <div className="countdown-separator">:</div>
-                    <div className="countdown-unit">
-                        <div className="countdown-value" id="countdownMinutes">00</div>
-                        <div className="countdown-label">Minutos</div>
-                    </div>
-                    <div className="countdown-separator">:</div>
-                    <div className="countdown-unit">
-                        <div className="countdown-value" id="countdownSeconds">00</div>
-                        <div className="countdown-label">Segundos</div>
-                    </div>
-                </div>
-                <p className="countdown-date-text" id="countdownDateText"></p>
-            </div>
-        </div>
-    </section>
+    <Countdown />
 
 
     
@@ -167,125 +142,8 @@ export default function Home() {
     
     
     
-    <section id="galeria" className="section-padding bg-light-rotary">
-        <div className="container">
-            <div className="section-header text-center mb-5">
-                <h2 className="section-title">Galería</h2>
-                <div className="title-underline"></div>
-                <p className="section-description mt-3">Momentos que reflejan nuestro compromiso con la comunidad.</p>
-            </div>
+    <Gallery />
 
-            
-            <div className="gallery-filters text-center mb-4">
-                <button className="btn btn-filter active" data-filter="all">Todas</button>
-                <button className="btn btn-filter" data-filter="eventos">Eventos</button>
-                <button className="btn btn-filter" data-filter="proyectos">Proyectos</button>
-                <button className="btn btn-filter" data-filter="comunidad">Comunidad</button>
-            </div>
-
-            
-            <div className="row g-3" id="galleryGrid">
-                
-                <div className="col-lg-4 col-md-6 gallery-item" data-category="proyectos">
-                    <div className="gallery-card" data-bs-toggle="modal" data-bs-target="#galleryModal" data-img="assets/img/gallery/20130516_GT_037.JPG" data-caption="Apoyo educativo comunitario">
-                        <img src="assets/img/gallery/20130516_GT_037.JPG" alt="Apoyo educativo comunitario" loading="lazy" />
-                        <div className="gallery-overlay">
-                            <i className="bi bi-zoom-in"></i>
-                        </div>
-                    </div>
-                </div>
-                
-                <div className="col-lg-4 col-md-6 gallery-item" data-category="comunidad">
-                    <div className="gallery-card" data-bs-toggle="modal" data-bs-target="#galleryModal" data-img="assets/img/gallery/20180526_BR_1637_edit.jpg" data-caption="Servicio comunitario con adultos mayores">
-                        <img src="assets/img/gallery/20180526_BR_1637_edit.jpg" alt="Servicio comunitario con adultos mayores" loading="lazy" />
-                        <div className="gallery-overlay">
-                            <i className="bi bi-zoom-in"></i>
-                        </div>
-                    </div>
-                </div>
-                
-                <div className="col-lg-4 col-md-6 gallery-item" data-category="comunidad">
-                    <div className="gallery-card" data-bs-toggle="modal" data-bs-target="#galleryModal" data-img="assets/img/gallery/20180526_BR_1727.jpg" data-caption="Voluntariado juvenil Rotary">
-                        <img src="assets/img/gallery/20180526_BR_1727.jpg" alt="Voluntariado juvenil Rotary" loading="lazy" />
-                        <div className="gallery-overlay">
-                            <i className="bi bi-zoom-in"></i>
-                        </div>
-                    </div>
-                </div>
-                
-                <div className="col-lg-4 col-md-6 gallery-item" data-category="proyectos">
-                    <div className="gallery-card" data-bs-toggle="modal" data-bs-target="#galleryModal" data-img="assets/img/gallery/20150427_MX_103.jpg" data-caption="Proyecto de ayuda comunitaria">
-                        <img src="assets/img/gallery/20150427_MX_103.jpg" alt="Proyecto de ayuda comunitaria" loading="lazy" />
-                        <div className="gallery-overlay">
-                            <i className="bi bi-zoom-in"></i>
-                        </div>
-                    </div>
-                </div>
-                
-                <div className="col-lg-4 col-md-6 gallery-item" data-category="eventos">
-                    <div className="gallery-card" data-bs-toggle="modal" data-bs-target="#galleryModal" data-img="assets/img/gallery/20210812_US_204.jpg" data-caption="Evento de integración Rotaria">
-                        <img src="assets/img/gallery/20210812_US_204.jpg" alt="Evento de integración Rotaria" loading="lazy" />
-                        <div className="gallery-overlay">
-                            <i className="bi bi-zoom-in"></i>
-                        </div>
-                    </div>
-                </div>
-                
-                <div className="col-lg-4 col-md-6 gallery-item" data-category="proyectos">
-                    <div className="gallery-card" data-bs-toggle="modal" data-bs-target="#galleryModal" data-img="assets/img/gallery/20211114_US_182.jpg" data-caption="Trabajo comunitario Rotary">
-                        <img src="assets/img/gallery/20211114_US_182.jpg" alt="Trabajo comunitario Rotary" loading="lazy" />
-                        <div className="gallery-overlay">
-                            <i className="bi bi-zoom-in"></i>
-                        </div>
-                    </div>
-                </div>
-                
-                <div className="col-lg-4 col-md-6 gallery-item" data-category="comunidad">
-                    <div className="gallery-card" data-bs-toggle="modal" data-bs-target="#galleryModal" data-img="assets/img/gallery/20220405_KR_021.jpg" data-caption="Jornada de servicio comunitario">
-                        <img src="assets/img/gallery/20220405_KR_021.jpg" alt="Jornada de servicio comunitario" loading="lazy" />
-                        <div className="gallery-overlay">
-                            <i className="bi bi-zoom-in"></i>
-                        </div>
-                    </div>
-                </div>
-                
-                <div className="col-lg-4 col-md-6 gallery-item" data-category="eventos">
-                    <div className="gallery-card" data-bs-toggle="modal" data-bs-target="#galleryModal" data-img="assets/img/gallery/20240425_TR_014.jpg" data-caption="Evento Rotary Internacional">
-                        <img src="assets/img/gallery/20240425_TR_014.jpg" alt="Evento Rotary Internacional" loading="lazy" />
-                        <div className="gallery-overlay">
-                            <i className="bi bi-zoom-in"></i>
-                        </div>
-                    </div>
-                </div>
-                
-                <div className="col-lg-4 col-md-6 gallery-item" data-category="eventos">
-                    <div className="gallery-card" data-bs-toggle="modal" data-bs-target="#galleryModal" data-img="assets/img/gallery/20161110_US_391.jpg" data-caption="Evento Rotary USA 2016">
-                        <img src="assets/img/gallery/20161110_US_391.jpg" alt="Evento Rotary USA 2016" loading="lazy" />
-                        <div className="gallery-overlay">
-                            <i className="bi bi-zoom-in"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    
-    <div className="modal fade" id="galleryModal" tabindex="-1" aria-label="Vista ampliada" aria-hidden="true">
-        <div className="modal-dialog modal-dialog-centered modal-lg">
-            <div className="modal-content bg-dark border-0">
-                <div className="modal-header border-0">
-                    <button type="button" className="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                </div>
-                <div className="modal-body text-center p-0">
-                    <img id="modalImage" alt="Imagen ampliada" className="img-fluid rounded" />
-                </div>
-                <div className="modal-footer border-0 justify-content-center">
-                    <p id="modalCaption" className="text-white mb-0"></p>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
     
@@ -329,72 +187,7 @@ export default function Home() {
     
     
     
-    <section id="calendario" className="section-padding">
-        <div className="container">
-            <div className="section-header text-center mb-5">
-                <h2 className="section-title">Calendario de Eventos</h2>
-                <div className="title-underline"></div>
-                <p className="section-description mt-3">Descubre nuestras próximas actividades y únete a generar un impacto positivo.</p>
-            </div>
-
-            <div className="calendar-wrapper">
-                
-                <div className="calendar-controls d-flex justify-content-between align-items-center mb-4">
-                    <button id="prevMonth" className="btn btn-rotary-outline" aria-label="Mes anterior">
-                        <i className="bi bi-chevron-left"></i>
-                    </button>
-                    <h3 id="currentMonth" className="calendar-month-title mb-0"></h3>
-                    <button id="nextMonth" className="btn btn-rotary-outline" aria-label="Mes siguiente">
-                        <i className="bi bi-chevron-right"></i>
-                    </button>
-                </div>
-
-                
-                <div className="calendar-grid">
-                    <div className="calendar-header">
-                        <div className="calendar-day-name">Dom</div>
-                        <div className="calendar-day-name">Lun</div>
-                        <div className="calendar-day-name">Mar</div>
-                        <div className="calendar-day-name">Mié</div>
-                        <div className="calendar-day-name">Jue</div>
-                        <div className="calendar-day-name">Vie</div>
-                        <div className="calendar-day-name">Sáb</div>
-                    </div>
-                    <div id="calendarBody" className="calendar-body">
-                        
-                    </div>
-                </div>
-
-                
-                <div id="eventDetail" className="event-detail mt-4" style={{ display: 'none' }}>
-                    <div className="card border-0 shadow-sm">
-                        <div className="card-body p-4">
-                            <div className="d-flex align-items-center mb-3">
-                                <div className="event-date-badge me-3">
-                                    <span id="eventDay" className="event-date-day"></span>
-                                    <span id="eventMonth" className="event-date-month"></span>
-                                </div>
-                                <div>
-                                    <h4 id="eventTitle" className="mb-1"></h4>
-                                    <p id="eventTime" className="text-muted mb-0"><i className="bi bi-clock me-1"></i></p>
-                                </div>
-                            </div>
-                            <p id="eventDescription" className="mb-0"></p>
-                            <p id="eventLocation" className="text-muted mt-2 mb-0"><i className="bi bi-geo-alt me-1"></i></p>
-                        </div>
-                    </div>
-                </div>
-
-                
-                <div className="upcoming-events mt-5">
-                    <h4 className="mb-3"><i className="bi bi-calendar-event me-2"></i>Próximos Eventos</h4>
-                    <div id="upcomingEventsList" className="list-group">
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <Calendar />
 
 
     
