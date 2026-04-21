@@ -1,7 +1,7 @@
 import { createServerClient } from '@supabase/ssr'
 import { type NextRequest, NextResponse } from 'next/server'
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname
 
   // Si es la página de login, siempre pasar sin verificar
@@ -41,7 +41,6 @@ export async function middleware(request: NextRequest) {
   )
 
   // getUser() hace una llamada al servidor de Supabase para validar el token
-  // Es seguro porque NO pasa por el middleware (es una llamada directa al API de Supabase)
   const { data: { user } } = await supabase.auth.getUser()
 
   if (!user) {
