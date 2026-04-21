@@ -278,7 +278,7 @@ export default function Home() {
                     <button type="button" className="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div className="modal-body text-center p-0">
-                    <img id="modalImage" src="" alt="Imagen ampliada" className="img-fluid rounded" />
+                    <img id="modalImage" alt="Imagen ampliada" className="img-fluid rounded" />
                 </div>
                 <div className="modal-footer border-0 justify-content-center">
                     <p id="modalCaption" className="text-white mb-0"></p>
