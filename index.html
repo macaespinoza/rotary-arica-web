@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Rotary Club Arica - Gente de acción creando cambios duraderos en nuestra comunidad y el mundo.">
+    <title>Rotary Club Arica</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+    <!-- Google Fonts: Open Sans & Open Sans Condensed (alternativa web a Frutiger) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=Open+Sans+Condensed:wght@300;700&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <!-- ============================================================== -->
+    <!-- NAVBAR -->
+    <!-- ============================================================== -->
+    <nav id="mainNavbar" class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="assets/logos/RotaryMoE-R_CMYK-C.png" alt="Rotary Club Arica" id="logo-navbar" class="me-2">
+                <span class="brand-text">Rotary Club<br><strong>Arica</strong></span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Menú de navegación">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#hero">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#mision-vision">Nosotros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#galeria">Galería</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#papelito-section">El Papelito</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#calendario">Eventos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contacto">Contacto</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- ============================================================== -->
+    <!-- HERO SECTION -->
+    <!-- ============================================================== -->
+    <section id="hero" class="hero-section d-flex align-items-center">
+        <div class="hero-overlay"></div>
+        <div class="container position-relative z-1 text-center text-white">
+            <img src="assets/logos/RotaryMoE-R_CMYK-C.png" alt="Rotary" class="hero-logo mb-4" width="220">
+            <h1 class="hero-title">Rotary Club Arica</h1>
+            <p class="hero-subtitle">Gente de acción creando cambios duraderos en nuestra comunidad y el mundo</p>
+            <div class="hero-buttons mt-4">
+                <a href="#mision-vision" class="btn btn-rotary-gold btn-lg me-2">Conócenos</a>
+                <a href="#calendario" class="btn btn-outline-light btn-lg">Próximos Eventos</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- COUNTDOWN SECTION -->
+    <!-- ============================================================== -->
+    <section id="countdown" class="countdown-section">
+        <div class="container text-center">
+            <div class="countdown-container">
+                <h2 class="countdown-title">Próximo Gran Evento</h2>
+                <p class="countdown-event-name" id="countdownEventName">Cena de Gala Anual</p>
+                <div class="countdown-timer" id="countdownTimer">
+                    <div class="countdown-unit">
+                        <div class="countdown-value" id="countdownDays">00</div>
+                        <div class="countdown-label">Días</div>
+                    </div>
+                    <div class="countdown-separator">:</div>
+                    <div class="countdown-unit">
+                        <div class="countdown-value" id="countdownHours">00</div>
+                        <div class="countdown-label">Horas</div>
+                    </div>
+                    <div class="countdown-separator">:</div>
+                    <div class="countdown-unit">
+                        <div class="countdown-value" id="countdownMinutes">00</div>
+                        <div class="countdown-label">Minutos</div>
+                    </div>
+                    <div class="countdown-separator">:</div>
+                    <div class="countdown-unit">
+                        <div class="countdown-value" id="countdownSeconds">00</div>
+                        <div class="countdown-label">Segundos</div>
+                    </div>
+                </div>
+                <p class="countdown-date-text" id="countdownDateText"></p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ============================================================== -->
+    <!-- MISIÓN, VISIÓN Y VALORES (3 TARJETAS) -->
+    <!-- ============================================================== -->
+    <section id="mision-vision" class="section-padding">
+        <div class="container">
+            <div class="section-header text-center mb-5">
+                <h2 class="section-title">Nuestra Esencia</h2>
+                <div class="title-underline"></div>
+                <p class="section-description mt-3">Impulsamos el servicio, la integridad y el compañerismo para crear un impacto positivo.</p>
+            </div>
+
+            <div class="row g-4">
+                <!-- Tarjeta 1: Misión -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card card-rotary h-100" id="card-mision">
+                        <div class="card-body text-center p-4">
+                            <div class="card-icon-wrapper mb-3">
+                                <i class="bi bi-bullseye"></i>
+                            </div>
+                            <h3 class="card-title">Misión</h3>
+                            <p class="card-text">
+                                Brindar servicio humanitario en Arica, promoviendo la integridad y 
+                                la paz a través de proyectos locales sostenibles bajo nuestro lema 
+                                fundamental: "Dar de sí antes de pensar en sí".
+                            </p>
+                        </div>
+                        <div class="card-footer-accent"></div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 2: Visión -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card card-rotary h-100" id="card-vision">
+                        <div class="card-body text-center p-4">
+                            <div class="card-icon-wrapper mb-3">
+                                <i class="bi bi-eye"></i>
+                            </div>
+                            <h3 class="card-title">Visión</h3>
+                            <p class="card-text">
+                                Ser el referente de liderazgo y servicio en el norte de Chile, 
+                                transformando realidades en nuestra región mediante una 
+                                red global de personas de acción que generan un
+                                 impacto positivo y duradero.
+                            </p>
+                        </div>
+                        <div class="card-footer-accent"></div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 3: Valores -->
+                <div class="col-lg-4 col-md-12">
+                    <div class="card card-rotary h-100" id="card-valores">
+                        <div class="card-body text-center p-4">
+                            <div class="card-icon-wrapper mb-3">
+                                <i class="bi bi-heart-pulse"></i>
+                            </div>
+                            <h3 class="card-title">Valores</h3>
+                            <p class="card-text">
+                                Nos guiamos por la integridad, el compañerismo, la diversidad,
+                                 el servicio y el liderazgo. Actuamos con ética y transparencia 
+                                 para construir una comunidad ariqueña más fuerte y solidaria.
+                            </p>
+                        </div>
+                        <div class="card-footer-accent"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ============================================================== -->
+    <!-- GALERÍA DE FOTOS -->
+    <!-- ============================================================== -->
+    <section id="galeria" class="section-padding bg-light-rotary">
+        <div class="container">
+            <div class="section-header text-center mb-5">
+                <h2 class="section-title">Galería</h2>
+                <div class="title-underline"></div>
+                <p class="section-description mt-3">Momentos que reflejan nuestro compromiso con la comunidad.</p>
+            </div>
+
+            <!-- Filtro de galería -->
+            <div class="gallery-filters text-center mb-4">
+                <button class="btn btn-filter active" data-filter="all">Todas</button>
+                <button class="btn btn-filter" data-filter="eventos">Eventos</button>
+                <button class="btn btn-filter" data-filter="proyectos">Proyectos</button>
+                <button class="btn btn-filter" data-filter="comunidad">Comunidad</button>
+            </div>
+
+            <!-- Grid de galería -->
+            <div class="row g-3" id="galleryGrid">
+                <!-- Foto 1: Apoyo educativo en Guatemala -->
+                <div class="col-lg-4 col-md-6 gallery-item" data-category="proyectos">
+                    <div class="gallery-card" data-bs-toggle="modal" data-bs-target="#galleryModal" data-img="assets/img/gallery/20130516_GT_037.JPG" data-caption="Apoyo educativo comunitario">
+                        <img src="assets/img/gallery/20130516_GT_037.JPG" alt="Apoyo educativo comunitario" loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="bi bi-zoom-in"></i>
+                        </div>
+                    </div>
+                </div>
+                <!-- Foto 2: Jóvenes Rotaract en Brasil -->
+                <div class="col-lg-4 col-md-6 gallery-item" data-category="comunidad">
+                    <div class="gallery-card" data-bs-toggle="modal" data-bs-target="#galleryModal" data-img="assets/img/gallery/20180526_BR_1637_edit.jpg" data-caption="Servicio comunitario con adultos mayores">
+                        <img src="assets/img/gallery/20180526_BR_1637_edit.jpg" alt="Servicio comunitario con adultos mayores" loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="bi bi-zoom-in"></i>
+                        </div>
+                    </div>
+                </div>
+                <!-- Foto 3: Voluntariado juvenil -->
+                <div class="col-lg-4 col-md-6 gallery-item" data-category="comunidad">
+                    <div class="gallery-card" data-bs-toggle="modal" data-bs-target="#galleryModal" data-img="assets/img/gallery/20180526_BR_1727.jpg" data-caption="Voluntariado juvenil Rotary">
+                        <img src="assets/img/gallery/20180526_BR_1727.jpg" alt="Voluntariado juvenil Rotary" loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="bi bi-zoom-in"></i>
+                        </div>
+                    </div>
+                </div>
+                <!-- Foto 4: Proyecto de ayuda México -->
+                <div class="col-lg-4 col-md-6 gallery-item" data-category="proyectos">
+                    <div class="gallery-card" data-bs-toggle="modal" data-bs-target="#galleryModal" data-img="assets/img/gallery/20150427_MX_103.jpg" data-caption="Proyecto de ayuda comunitaria">
+                        <img src="assets/img/gallery/20150427_MX_103.jpg" alt="Proyecto de ayuda comunitaria" loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="bi bi-zoom-in"></i>
+                        </div>
+                    </div>
+                </div>
+                <!-- Foto 5: Actividad grupal USA -->
+                <div class="col-lg-4 col-md-6 gallery-item" data-category="eventos">
+                    <div class="gallery-card" data-bs-toggle="modal" data-bs-target="#galleryModal" data-img="assets/img/gallery/20210812_US_204.jpg" data-caption="Evento de integración Rotaria">
+                        <img src="assets/img/gallery/20210812_US_204.jpg" alt="Evento de integración Rotaria" loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="bi bi-zoom-in"></i>
+                        </div>
+                    </div>
+                </div>
+                <!-- Foto 6: Trabajo comunitario USA -->
+                <div class="col-lg-4 col-md-6 gallery-item" data-category="proyectos">
+                    <div class="gallery-card" data-bs-toggle="modal" data-bs-target="#galleryModal" data-img="assets/img/gallery/20211114_US_182.jpg" data-caption="Trabajo comunitario Rotary">
+                        <img src="assets/img/gallery/20211114_US_182.jpg" alt="Trabajo comunitario Rotary" loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="bi bi-zoom-in"></i>
+                        </div>
+                    </div>
+                </div>
+                <!-- Foto 7: Servicio comunitario Corea -->
+                <div class="col-lg-4 col-md-6 gallery-item" data-category="comunidad">
+                    <div class="gallery-card" data-bs-toggle="modal" data-bs-target="#galleryModal" data-img="assets/img/gallery/20220405_KR_021.jpg" data-caption="Jornada de servicio comunitario">
+                        <img src="assets/img/gallery/20220405_KR_021.jpg" alt="Jornada de servicio comunitario" loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="bi bi-zoom-in"></i>
+                        </div>
+                    </div>
+                </div>
+                <!-- Foto 8: Evento Turquía -->
+                <div class="col-lg-4 col-md-6 gallery-item" data-category="eventos">
+                    <div class="gallery-card" data-bs-toggle="modal" data-bs-target="#galleryModal" data-img="assets/img/gallery/20240425_TR_014.jpg" data-caption="Evento Rotary Internacional">
+                        <img src="assets/img/gallery/20240425_TR_014.jpg" alt="Evento Rotary Internacional" loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="bi bi-zoom-in"></i>
+                        </div>
+                    </div>
+                </div>
+                <!-- Foto 9: Evento Rotary USA 2016 -->
+                <div class="col-lg-4 col-md-6 gallery-item" data-category="eventos">
+                    <div class="gallery-card" data-bs-toggle="modal" data-bs-target="#galleryModal" data-img="assets/img/gallery/20161110_US_391.jpg" data-caption="Evento Rotary USA 2016">
+                        <img src="assets/img/gallery/20161110_US_391.jpg" alt="Evento Rotary USA 2016" loading="lazy">
+                        <div class="gallery-overlay">
+                            <i class="bi bi-zoom-in"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal de Galería -->
+    <div class="modal fade" id="galleryModal" tabindex="-1" aria-label="Vista ampliada" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content bg-dark border-0">
+                <div class="modal-header border-0">
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body text-center p-0">
+                    <img id="modalImage" src="" alt="Imagen ampliada" class="img-fluid rounded">
+                </div>
+                <div class="modal-footer border-0 justify-content-center">
+                    <p id="modalCaption" class="text-white mb-0"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ============================================================== -->
+    <!-- EL PAPELITO (CARRUSEL) -->
+    <!-- ============================================================== -->
+    <section id="papelito-section" class="section-padding">
+        <div class="container">
+            <div class="section-header text-center mb-5">
+                <h2 class="section-title">El Papelito</h2>
+                <div class="title-underline"></div>
+                <p class="section-description mt-3">Nuestro boletín oficial. Mantente informado con nuestras últimas ediciones.</p>
+            </div>
+
+            <div id="papelitoCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner" id="papelitoCarouselInner">
+                    <!-- Los items del carrusel se generarán con JS -->
+                    <div class="text-center py-5">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Cargando...</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#papelitoCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon bg-dark rounded-circle p-3" aria-hidden="true"></span>
+                    <span class="visually-hidden">Anterior</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#papelitoCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon bg-dark rounded-circle p-3" aria-hidden="true"></span>
+                    <span class="visually-hidden">Siguiente</span>
+                </button>
+            </div>
+
+            <div class="text-center mt-5">
+                <a href="papelito.html" class="btn btn-rotary-gold btn-lg">
+                    <i class="bi bi-book me-2"></i>Ir al Visor Interactivo
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- CALENDARIO DE EVENTOS -->
+    <!-- ============================================================== -->
+    <section id="calendario" class="section-padding">
+        <div class="container">
+            <div class="section-header text-center mb-5">
+                <h2 class="section-title">Calendario de Eventos</h2>
+                <div class="title-underline"></div>
+                <p class="section-description mt-3">Descubre nuestras próximas actividades y únete a generar un impacto positivo.</p>
+            </div>
+
+            <div class="calendar-wrapper">
+                <!-- Controles del calendario -->
+                <div class="calendar-controls d-flex justify-content-between align-items-center mb-4">
+                    <button id="prevMonth" class="btn btn-rotary-outline" aria-label="Mes anterior">
+                        <i class="bi bi-chevron-left"></i>
+                    </button>
+                    <h3 id="currentMonth" class="calendar-month-title mb-0"></h3>
+                    <button id="nextMonth" class="btn btn-rotary-outline" aria-label="Mes siguiente">
+                        <i class="bi bi-chevron-right"></i>
+                    </button>
+                </div>
+
+                <!-- Grilla del calendario -->
+                <div class="calendar-grid">
+                    <div class="calendar-header">
+                        <div class="calendar-day-name">Dom</div>
+                        <div class="calendar-day-name">Lun</div>
+                        <div class="calendar-day-name">Mar</div>
+                        <div class="calendar-day-name">Mié</div>
+                        <div class="calendar-day-name">Jue</div>
+                        <div class="calendar-day-name">Vie</div>
+                        <div class="calendar-day-name">Sáb</div>
+                    </div>
+                    <div id="calendarBody" class="calendar-body">
+                        <!-- Los días se generan con JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Detalle de evento seleccionado -->
+                <div id="eventDetail" class="event-detail mt-4" style="display: none;">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="event-date-badge me-3">
+                                    <span id="eventDay" class="event-date-day"></span>
+                                    <span id="eventMonth" class="event-date-month"></span>
+                                </div>
+                                <div>
+                                    <h4 id="eventTitle" class="mb-1"></h4>
+                                    <p id="eventTime" class="text-muted mb-0"><i class="bi bi-clock me-1"></i></p>
+                                </div>
+                            </div>
+                            <p id="eventDescription" class="mb-0"></p>
+                            <p id="eventLocation" class="text-muted mt-2 mb-0"><i class="bi bi-geo-alt me-1"></i></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lista de próximos eventos -->
+                <div class="upcoming-events mt-5">
+                    <h4 class="mb-3"><i class="bi bi-calendar-event me-2"></i>Próximos Eventos</h4>
+                    <div id="upcomingEventsList" class="list-group">
+                        <!-- Se genera con JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ============================================================== -->
+    <!-- FOOTER / CONTACTO -->
+    <!-- ============================================================== -->
+    <footer id="contacto" class="footer-section">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-brand mb-3">
+                        <img src="assets/logos/RotaryMoE-R_CMYK-C.png" alt="Rotary Club Arica" height="60" class="mb-2" loading="lazy">
+                        <h5>Rotary Club Arica</h5>
+                    </div>
+                    <p class="footer-text">Somos gente de acción comprometida con el servicio a la comunidad de Arica y el mundo.</p>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <h5 class="footer-heading">Enlaces Rápidos</h5>
+                    <ul class="footer-links">
+                        <li><a href="#hero">Inicio</a></li>
+                        <li><a href="#mision-vision">Nosotros</a></li>
+                        <li><a href="#galeria">Galería</a></li>
+                        <li><a href="#papelito-section">El Papelito</a></li>
+                        <li><a href="#calendario">Eventos</a></li>
+                        <li><a href="https://www.rotary.org" target="_blank" rel="noopener">Rotary Internacional</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-12">
+                    <h5 class="footer-heading">Contacto</h5>
+                    <ul class="footer-contact">
+                        <li><i class="bi bi-geo-alt me-2"></i>Arica, Chile</li>
+                        <li><i class="bi bi-envelope me-2"></i>contacto@rotaryclubrica.cl</li>
+                        <li><i class="bi bi-telephone me-2"></i>+56 9 XXXX XXXX</li>
+                    </ul>
+                    <div class="footer-social mt-3">
+                        <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="footer-divider">
+            <div class="footer-bottom text-center">
+                <p class="mb-0">&copy; 2026 Rotary Club Arica. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- Botón volver arriba -->
+    <button id="backToTop" class="btn-back-to-top" aria-label="Volver arriba">
+        <i class="bi bi-arrow-up"></i>
+    </button>
+
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+</body>
+</html>

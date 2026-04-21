@@ -1,0 +1,44 @@
+[
+  {
+    "id": "10",
+    "titulo": "Edición N°10 - Optimizando",
+    "fechaPublicacion": "2026-04-19",
+    "archivoPdf": "assets/papelito/pdf/M10 - Optimiza tu LinkedIn - Macarena Espinoza.pdf",
+    "miniatura": "assets/img/gallery/20130516_GT_037.JPG"
+  },
+  {
+    "id": "9",
+    "titulo": "Edición N°9 - Portafolio",
+    "fechaPublicacion": "2026-04-18",
+    "archivoPdf": "assets/papelito/pdf/M10 - Evaluación de portafolio - Macarena Espinoza.pdf",
+    "miniatura": "assets/img/gallery/20180526_BR_1637_edit.jpg"
+  },
+  {
+    "id": "8",
+    "titulo": "Edición N°8 - Técnica",
+    "fechaPublicacion": "2026-04-17",
+    "archivoPdf": "assets/papelito/pdf/M10 - Ejercicio 03 - Tecnica STAR - Macarena Espinoza.pdf",
+    "miniatura": "assets/img/gallery/20180526_BR_1727.jpg"
+  },
+  {
+    "id": "7",
+    "titulo": "Edición N°7 - Entrevista",
+    "fechaPublicacion": "2026-04-16",
+    "archivoPdf": "assets/papelito/pdf/M10 - Simulando una entrevista laboral - Macarena Espinoza.pdf",
+    "miniatura": "assets/img/gallery/20150427_MX_103.jpg"
+  },
+  {
+    "id": "6",
+    "titulo": "Edición N°6 - Pitch",
+    "fechaPublicacion": "2026-04-15",
+    "archivoPdf": "assets/papelito/pdf/M10_AE3_Ejercicio Crea tu pitch - Macarena Espinoza.pdf",
+    "miniatura": "assets/img/gallery/20210812_US_204.jpg"
+  },
+  {
+    "id": "5",
+    "titulo": "Edición N°5 - Módulo",
+    "fechaPublicacion": "2026-03-31",
+    "archivoPdf": "assets/papelito/pdf/M10 - Evaluacion de Modulo - Macarena Espinoza.pdf",
+    "miniatura": "assets/img/gallery/20211114_US_182.jpg"
+  }
+]

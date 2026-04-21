@@ -1,0 +1,1126 @@
+/* ==========================================================================
+   ROTARY CLUB ARICA - ESTILOS PRINCIPALES
+   Colores y tipografías según manual de marca de Rotary International
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   CSS CUSTOM PROPERTIES (Variables de marca Rotary)
+   -------------------------------------------------------------------------- */
+:root {
+    /* Colores de marca Rotary */
+    --rotary-royal-blue: #17458f;
+    --rotary-gold: #f7a81b;
+    --rotary-azure: #0067c8;
+    --rotary-sky-blue: #00a2e0;
+    
+    /* 2025 Expanded Palette */
+    --rotary-cranberry: #d91b5c;
+    --rotary-cardinal: #e11c2d;
+    --rotary-slate: #6e819b;
+    --rotary-turquoise: #00acc1;
+    --rotary-violet: #872185;
+    --rotary-orange: #ff7600;
+    --rotary-grass: #009944;
+    --rotary-taupe: #d9c89e;
+    --rotary-charcoal: #58595b;
+
+    /* Variantes de color */
+    --rotary-royal-blue-dark: #0e2d5e;
+    --rotary-royal-blue-light: #1e5bb8;
+    --rotary-gold-dark: #d48e0f;
+    --rotary-gold-light: #fbc14d;
+
+    /* Neutros */
+    --rotary-white: #ffffff;
+    --rotary-light-gray: #f4f6f9;
+    --rotary-gray: #6c757d;
+    --rotary-dark: #1a1a2e;
+
+    /* Tipografías (Open Sans como alternativa web a Frutiger) */
+    --font-primary: 'Open Sans', Arial, Helvetica, sans-serif;
+    --font-condensed: 'Open Sans Condensed', Arial Narrow, Arial, sans-serif;
+
+    /* Espaciados */
+    --section-padding: 50px 0;
+    --navbar-height: 80px;
+
+    /* Transiciones */
+    --transition-base: all 0.3s ease;
+    --transition-smooth: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+
+/* --------------------------------------------------------------------------
+   RESET & BASE
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--navbar-height);
+}
+
+body {
+    font-family: var(--font-primary);
+    color: #333;
+    font-size: 17px;
+    line-height: 1.75;
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-condensed);
+    font-weight: 700;
+    color: var(--rotary-royal-blue);
+}
+
+a {
+    text-decoration: none;
+    transition: var(--transition-base);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+
+/* --------------------------------------------------------------------------
+   UTILIDADES ROTARY
+   -------------------------------------------------------------------------- */
+.section-padding {
+    padding: var(--section-padding);
+}
+
+.bg-light-rotary {
+    background-color: var(--rotary-light-gray);
+}
+
+.section-title {
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--rotary-royal-blue);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.title-underline {
+    width: 60px;
+    height: 4px;
+    background: var(--rotary-gold);
+    margin: 10px auto 0;
+    border-radius: 2px;
+}
+
+.section-description {
+    color: var(--rotary-gray);
+    font-size: 1.15rem;
+    max-width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.8;
+}
+
+
+/* --------------------------------------------------------------------------
+   BOTONES ROTARY
+   -------------------------------------------------------------------------- */
+.btn-rotary-gold {
+    background-color: var(--rotary-gold);
+    color: var(--rotary-white);
+    border: 2px solid var(--rotary-gold);
+    font-weight: 600;
+    font-size: 1.05rem;
+    border-radius: 50px;
+    padding: 12px 32px;
+    transition: var(--transition-smooth);
+}
+
+.btn-rotary-gold:hover {
+    background-color: var(--rotary-gold-dark);
+    border-color: var(--rotary-gold-dark);
+    color: var(--rotary-white);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(247, 168, 27, 0.4);
+}
+
+.btn-rotary-outline {
+    background-color: transparent;
+    color: var(--rotary-royal-blue);
+    border: 2px solid var(--rotary-royal-blue);
+    font-weight: 600;
+    font-size: 1.05rem;
+    border-radius: 50px;
+    padding: 10px 24px;
+    transition: var(--transition-smooth);
+}
+
+.btn-rotary-outline:hover {
+    background-color: var(--rotary-royal-blue);
+    color: var(--rotary-white);
+}
+
+.btn-outline-light {
+    border-radius: 50px;
+    padding: 12px 32px;
+    font-weight: 600;
+    font-size: 1.05rem;
+    border-width: 2px;
+}
+
+.btn-outline-light:hover {
+    transform: translateY(-2px);
+}
+
+
+/* --------------------------------------------------------------------------
+   NAVBAR
+   -------------------------------------------------------------------------- */
+#mainNavbar {
+    background-color: rgba(23, 69, 143, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 12px 0;
+    transition: var(--transition-smooth);
+    z-index: 1050;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+#mainNavbar.scrolled {
+    background-color: rgba(23, 69, 143, 1);
+    padding: 8px 0;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
+}
+
+.brand-text {
+    font-family: var(--font-condensed);
+    font-size: 1.4rem;
+    line-height: 1.1;
+    color: var(--rotary-white);
+}
+.brand-text strong {
+    font-size: 1.35rem;
+}
+
+#mainNavbar .nav-link {
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 600;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 10px 18px;
+    position: relative;
+    transition: var(--transition-base);
+}
+
+#mainNavbar .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background-color: var(--rotary-gold);
+    transition: var(--transition-smooth);
+}
+
+#mainNavbar .nav-link:hover,
+#mainNavbar .nav-link.active {
+    color: var(--rotary-white);
+}
+
+#mainNavbar .nav-link:hover::after,
+#mainNavbar .nav-link.active::after {
+    width: 70%;
+}
+
+#logo-navbar {
+    height: 60px;
+    width: auto;
+    transition: var(--transition-smooth);
+}
+
+#mainNavbar.scrolled #logo-navbar {
+    height: 45px;
+}
+
+
+/* --------------------------------------------------------------------------
+   HERO SECTION
+   -------------------------------------------------------------------------- */
+.hero-section {
+    min-height: 100vh;
+    padding-top: var(--navbar-height);
+    background:
+        linear-gradient(135deg, rgba(23, 69, 143, 0.85) 0%, rgba(0, 103, 200, 0.75) 100%),
+        url('../assets/img/gallery/20240425_TR_014.jpg') center/cover no-repeat;
+    position: relative;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 0%, rgba(10, 30, 70, 0.4) 100%);
+}
+
+.hero-logo {
+    margin-top: 2rem;
+    animation: fadeInDown 1s ease;
+}
+
+.hero-title {
+    font-family: var(--font-condensed);
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--rotary-white);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    animation: fadeInUp 1s ease 0.2s both;
+}
+
+.hero-subtitle {
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.92);
+    max-width: 650px;
+    margin: 0 auto;
+    line-height: 1.8;
+    animation: fadeInUp 1s ease 0.4s both;
+}
+
+.hero-buttons {
+    animation: fadeInUp 1s ease 0.6s both;
+}
+
+
+/* --------------------------------------------------------------------------
+   COUNTDOWN SECTION
+   -------------------------------------------------------------------------- */
+.countdown-section {
+    padding: 50px 0 30px;
+    background: linear-gradient(160deg, var(--rotary-royal-blue-dark) 0%, var(--rotary-royal-blue) 50%, var(--rotary-azure) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Sutil patrón decorativo de fondo */
+.countdown-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 20% 50%, rgba(247, 168, 27, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 80% 50%, rgba(0, 162, 224, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.countdown-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 30px;
+    position: relative;
+    z-index: 1;
+}
+
+.countdown-title {
+    font-family: var(--font-condensed);
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.7);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 4px;
+}
+
+.countdown-event-name {
+    font-family: var(--font-condensed);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--rotary-gold);
+    margin-bottom: 30px;
+    letter-spacing: 0.5px;
+}
+
+/* Timer principal */
+.countdown-timer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.countdown-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.countdown-value {
+    font-family: var(--font-condensed);
+    font-size: 4rem;
+    font-weight: 700;
+    color: var(--rotary-white);
+    line-height: 1;
+    width: 110px;
+    height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.countdown-value::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 10%;
+    right: 10%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--rotary-gold), transparent);
+    border-radius: 3px;
+}
+
+.countdown-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.65);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.countdown-separator {
+    font-family: var(--font-condensed);
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--rotary-gold);
+    line-height: 1;
+    margin-bottom: 28px;
+    animation: countdownPulse 1s ease-in-out infinite;
+}
+
+.countdown-date-text {
+    margin-top: 25px;
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 400;
+    letter-spacing: 0.5px;
+}
+
+.countdown-date-text i {
+    color: var(--rotary-gold);
+    margin-right: 6px;
+}
+
+/* Estado: evento finalizado */
+.countdown-finished .countdown-value {
+    font-size: 2rem;
+    background: rgba(247, 168, 27, 0.15);
+    border-color: rgba(247, 168, 27, 0.3);
+}
+
+@keyframes countdownPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+/* Responsive countdown */
+@media (max-width: 768px) {
+    .countdown-section {
+        padding: 40px 0 20px;
+    }
+
+    .countdown-container {
+        padding: 30px 15px;
+    }
+
+    .countdown-event-name {
+        font-size: 1.5rem;
+    }
+
+    .countdown-timer {
+        gap: 6px;
+    }
+
+    .countdown-value {
+        font-size: 2.4rem;
+        width: 70px;
+        height: 70px;
+        border-radius: 12px;
+    }
+
+    .countdown-separator {
+        font-size: 2rem;
+        margin-bottom: 20px;
+    }
+
+    .countdown-label {
+        font-size: 0.7rem;
+        letter-spacing: 1px;
+    }
+}
+
+@media (max-width: 400px) {
+    .countdown-value {
+        font-size: 1.8rem;
+        width: 58px;
+        height: 58px;
+        border-radius: 10px;
+    }
+
+    .countdown-separator {
+        font-size: 1.5rem;
+    }
+}
+
+
+/* --------------------------------------------------------------------------
+   TARJETAS MISIÓN / VISIÓN / VALORES
+   -------------------------------------------------------------------------- */
+.card-rotary {
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: var(--transition-smooth);
+    position: relative;
+}
+
+.card-rotary:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 35px rgba(23, 69, 143, 0.15);
+}
+
+.card-icon-wrapper {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, var(--rotary-royal-blue), var(--rotary-azure));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    transition: var(--transition-smooth);
+}
+
+.card-rotary:hover .card-icon-wrapper {
+    background: linear-gradient(135deg, var(--rotary-gold), var(--rotary-gold-dark));
+    transform: scale(1.1);
+}
+
+.card-icon-wrapper i {
+    font-size: 1.8rem;
+    color: var(--rotary-white);
+}
+
+.card-rotary .card-title {
+    font-family: var(--font-condensed);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--rotary-royal-blue);
+    text-transform: uppercase;
+}
+
+.card-rotary .card-text {
+    color: var(--rotary-gray);
+    font-size: 1.05rem;
+    line-height: 1.8;
+}
+
+.card-footer-accent {
+    height: 4px;
+    background: linear-gradient(90deg, var(--rotary-royal-blue), var(--rotary-gold));
+}
+
+
+/* --------------------------------------------------------------------------
+   GALERÍA
+   -------------------------------------------------------------------------- */
+.gallery-filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-filter {
+    background-color: transparent;
+    color: var(--rotary-royal-blue);
+    border: 2px solid var(--rotary-royal-blue);
+    border-radius: 50px;
+    padding: 8px 22px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    transition: var(--transition-smooth);
+}
+
+.btn-filter:hover,
+.btn-filter.active {
+    background-color: var(--rotary-royal-blue);
+    color: var(--rotary-white);
+    border-color: var(--rotary-royal-blue);
+}
+
+.gallery-card {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    aspect-ratio: 4 / 3;
+    background-color: #e8ecf1;
+    transition: var(--transition-smooth);
+}
+
+.gallery-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.gallery-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #a0aec0;
+    gap: 8px;
+}
+
+.gallery-placeholder i {
+    font-size: 2.5rem;
+}
+
+.gallery-placeholder span {
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* Cuando haya imágenes reales, usa esta clase en vez de placeholder */
+.gallery-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.gallery-card:hover img {
+    transform: scale(1.08);
+}
+
+.gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(23, 69, 143, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: var(--transition-smooth);
+}
+
+.gallery-card:hover .gallery-overlay {
+    opacity: 1;
+}
+
+.gallery-overlay i {
+    font-size: 2rem;
+    color: var(--rotary-white);
+}
+
+.gallery-item {
+    transition: var(--transition-smooth);
+}
+
+.gallery-item.hidden {
+    display: none;
+}
+
+
+/* --------------------------------------------------------------------------
+   CALENDARIO DE EVENTOS
+   -------------------------------------------------------------------------- */
+.calendar-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.calendar-month-title {
+    font-family: var(--font-condensed);
+    font-size: 1.8rem; /* Aumentado de 1.5rem */
+    font-weight: 700;
+    color: var(--rotary-royal-blue);
+    text-transform: uppercase;
+}
+
+.calendar-controls .btn-rotary-outline {
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    border-width: 2px;
+}
+
+.calendar-grid {
+    background-color: var(--rotary-white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.calendar-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background: linear-gradient(135deg, var(--rotary-royal-blue), var(--rotary-azure));
+}
+
+.calendar-day-name {
+    text-align: center;
+    padding: 15px 4px; /* Aumentado padding */
+    font-weight: 700;
+    font-size: 0.95rem; /* Aumentado de 0.8rem */
+    text-transform: uppercase;
+    color: var(--rotary-white);
+    letter-spacing: 0.8px;
+}
+
+.calendar-body {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.calendar-day {
+    text-align: center;
+    padding: 15px 4px;
+    min-height: 75px; /* Aumentado de 55px para mejor manejabilidad */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #f0f0f0;
+    cursor: default;
+    transition: var(--transition-base);
+    position: relative;
+}
+
+.calendar-day:hover {
+    background-color: var(--rotary-light-gray);
+}
+
+.calendar-day.today {
+    background-color: rgba(0, 162, 224, 0.1);
+    font-weight: 700;
+    color: var(--rotary-azure);
+}
+
+.calendar-day.today .day-number {
+    background-color: var(--rotary-azure);
+    color: var(--rotary-white);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.calendar-day.has-event {
+    cursor: pointer;
+    background-color: rgba(247, 168, 27, 0.12); /* Fondo suave amarillo/oro permanente */
+    font-weight: 700;
+}
+
+.calendar-day.has-event::after {
+    content: '';
+    width: 12px; /* Aumentado de 6px */
+    height: 12px; /* Aumentado de 6px */
+    background-color: var(--rotary-gold);
+    border-radius: 50%;
+    margin-top: 6px;
+    box-shadow: 0 0 0 2px var(--rotary-white), 0 0 6px rgba(247, 168, 27, 0.6); /* Anillo de contraste y brillo */
+}
+
+.calendar-day.has-event:hover {
+    background-color: rgba(247, 168, 27, 0.25); /* Más intenso al pasar el mouse */
+}
+
+/* Estado mixto: Hoy + Evento */
+.calendar-day.today.has-event {
+    background-color: rgba(0, 162, 224, 0.15); /* Mantiene tinte azulado de hoy */
+    border: 2px solid var(--rotary-gold); /* Pero añade borde dorado por el evento */
+}
+
+.calendar-day.selected {
+    background-color: var(--rotary-royal-blue);
+    color: var(--rotary-white);
+}
+
+.calendar-day.selected .day-number {
+    color: var(--rotary-white);
+}
+
+.calendar-day.empty {
+    background-color: #fafafa;
+    cursor: default;
+}
+
+.calendar-day.other-month {
+    color: #ccc;
+}
+
+.day-number {
+    font-weight: 700;
+    font-size: 1.15rem;
+}
+
+
+/* Detalle de evento */
+.event-detail .card {
+    border-left: 4px solid var(--rotary-gold);
+    border-radius: 8px;
+    animation: slideDown 0.3s ease;
+}
+
+.event-date-badge {
+    background: linear-gradient(135deg, var(--rotary-royal-blue), var(--rotary-azure));
+    color: var(--rotary-white);
+    border-radius: 10px;
+    padding: 10px 15px;
+    text-align: center;
+    min-width: 60px;
+}
+
+.event-date-day {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.event-date-month {
+    display: block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#eventTitle {
+    color: var(--rotary-royal-blue);
+    font-family: var(--font-condensed);
+    font-weight: 700;
+}
+
+
+/* Lista de próximos eventos */
+.upcoming-events h4 {
+    font-family: var(--font-condensed);
+    color: var(--rotary-royal-blue);
+}
+
+.upcoming-events .list-group-item {
+    border: none;
+    border-left: 3px solid var(--rotary-gold);
+    margin-bottom: 8px;
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    background-color: var(--rotary-white);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: var(--transition-smooth);
+}
+
+.upcoming-events .list-group-item:hover {
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.upcoming-event-date {
+    font-size: 0.9rem;
+    color: var(--rotary-azure);
+    font-weight: 700;
+}
+
+.upcoming-event-title {
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: var(--rotary-royal-blue);
+    margin-bottom: 0;
+}
+
+.upcoming-event-time {
+    font-size: 0.95rem;
+    color: var(--rotary-gray);
+}
+
+
+/* --------------------------------------------------------------------------
+   FOOTER
+   -------------------------------------------------------------------------- */
+.footer-section {
+    background: linear-gradient(135deg, var(--rotary-royal-blue-dark), var(--rotary-royal-blue));
+    color: rgba(255, 255, 255, 0.85);
+    padding: 60px 0 30px;
+}
+
+.footer-brand img {
+    display: block;
+}
+
+.footer-brand h5 {
+    color: var(--rotary-white);
+    font-family: var(--font-condensed);
+}
+
+.footer-text {
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+.footer-heading {
+    color: var(--rotary-gold);
+    font-family: var(--font-condensed);
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin-bottom: 8px;
+}
+
+.footer-links a {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+    transition: var(--transition-base);
+}
+
+.footer-links a:hover {
+    color: var(--rotary-gold);
+    padding-left: 4px;
+}
+
+.footer-contact {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-contact li {
+    margin-bottom: 12px;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.footer-contact i {
+    color: var(--rotary-gold);
+}
+
+.footer-social a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    color: var(--rotary-white);
+    margin-right: 10px;
+    font-size: 1.1rem;
+    transition: var(--transition-smooth);
+}
+
+.footer-social a:hover {
+    background-color: var(--rotary-gold);
+    border-color: var(--rotary-gold);
+    color: var(--rotary-white);
+    transform: translateY(-3px);
+}
+
+.footer-divider {
+    border-color: rgba(255, 255, 255, 0.15);
+    margin: 30px 0 20px;
+}
+
+.footer-bottom p {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+
+/* --------------------------------------------------------------------------
+   BOTÓN VOLVER ARRIBA
+   -------------------------------------------------------------------------- */
+.btn-back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--rotary-royal-blue), var(--rotary-azure));
+    color: var(--rotary-white);
+    border: none;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: var(--transition-smooth);
+    z-index: 1040;
+    box-shadow: 0 4px 15px rgba(23, 69, 143, 0.3);
+}
+
+.btn-back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.btn-back-to-top:hover {
+    background: linear-gradient(135deg, var(--rotary-gold), var(--rotary-gold-dark));
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(247, 168, 27, 0.4);
+}
+
+
+/* --------------------------------------------------------------------------
+   ANIMACIONES
+   -------------------------------------------------------------------------- */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE
+   -------------------------------------------------------------------------- */
+@media (max-width: 991.98px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    #mainNavbar .navbar-collapse {
+        background-color: var(--rotary-royal-blue);
+        padding: 15px;
+        border-radius: 0 0 12px 12px;
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    :root {
+        --section-padding: 50px 0;
+    }
+
+    body {
+        font-size: 16px;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+        letter-spacing: 1px;
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+
+    .hero-buttons .btn {
+        display: block;
+        width: 100%;
+        margin-bottom: 10px;
+        font-size: 1.05rem;
+        padding: 14px 24px;
+    }
+
+    .hero-buttons .btn:last-child {
+        margin-bottom: 0;
+    }
+
+    .calendar-day {
+        padding: 8px 2px;
+        min-height: 45px;
+    }
+
+    .day-number {
+        font-size: 0.85rem;
+    }
+
+    .calendar-day-name {
+        font-size: 0.75rem;
+        padding: 10px 2px;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+    }
+
+    .section-description {
+        font-size: 1.05rem;
+    }
+
+    .card-rotary .card-text {
+        font-size: 1rem;
+    }
+}
