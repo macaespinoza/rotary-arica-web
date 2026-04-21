@@ -2,21 +2,20 @@
 
 import { useState, useEffect } from "react";
 
-const EVENTOS = [
-    { date: '2026-04-17', title: 'Reunión Semanal del Club', time: '19:30 - 21:00', description: 'Reunión semanal de los socios del Rotary Club Arica.', location: 'Sede Rotary Club Arica' },
-    { date: '2026-04-24', title: 'Reunión Semanal del Club', time: '19:30 - 21:00', description: 'Reunión semanal de los socios del Rotary Club Arica.', location: 'Sede Rotary Club Arica' },
-    { date: '2026-05-03', title: 'Jornada de Servicio Comunitario', time: '09:00 - 13:00', description: 'Día de limpieza y embellecimiento del Parque Centenario.', location: 'Parque Centenario, Arica' },
-    { date: '2026-05-10', title: 'Charla: Liderazgo en la Comunidad', time: '18:00 - 19:30', description: 'Charla abierta sobre liderazgo y servicio comunitario.', location: 'Auditorio Municipal de Arica' },
-    { date: '2026-05-22', title: 'Cena de Gala Anual', time: '20:00 - 23:00', description: 'Cena anual del club con premiación a socios destacados.', location: 'Hotel King, Arica' },
-    { date: '2026-06-05', title: 'Campaña de Salud', time: '08:00 - 14:00', description: 'Campaña gratuita de chequeo médico preventivo para la comunidad.', location: 'Plaza Colón, Arica' }
-];
+export type CalendarEvent = {
+  date: string;        // YYYY-MM-DD
+  title: string;
+  time?: string | null;
+  description?: string | null;
+  location?: string | null;
+};
 
 const MONTH_NAMES = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 const MONTH_NAMES_SHORT = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
 
-export default function Calendar() {
+export default function Calendar({ events }: { events: CalendarEvent[] }) {
     const [currentDate, setCurrentDate] = useState<Date | null>(null);
-    const [selectedEvent, setSelectedEvent] = useState<any>(null);
+    const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null);
     const [selectedDay, setSelectedDay] = useState<{day: number, month: number} | null>(null);
 
     useEffect(() => {
@@ -66,7 +65,7 @@ export default function Calendar() {
             }
         }
 
-        const dayEvents = EVENTOS.filter(e => e.date === dateStr);
+        const dayEvents = events.filter(e => e.date === dateStr);
         let title = "";
         if (dayEvents.length > 0 && isCurrentMonth) {
             classes.push("has-event");
@@ -101,7 +100,7 @@ export default function Calendar() {
         setSelectedDay(null);
     };
 
-    const handleDayClick = (dayData: any) => {
+    const handleDayClick = (dayData: typeof calendarDays[0]) => {
         if (dayData.events.length > 0 && dayData.isCurrentMonth) {
             setSelectedEvent(dayData.events[0]);
             setSelectedDay({ day: dayData.dayNumber, month: dayData.month });
@@ -110,7 +109,7 @@ export default function Calendar() {
 
     const todayVal = new Date();
     todayVal.setHours(0,0,0,0);
-    const upcomingEvents = EVENTOS
+    const upcomingEvents = events
         .filter(e => new Date(e.date + 'T00:00:00') >= todayVal)
         .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
         .slice(0, 5);
@@ -171,11 +170,17 @@ export default function Calendar() {
                                         </div>
                                         <div>
                                             <h4 className="mb-1">{selectedEvent.title}</h4>
-                                            <p className="text-muted mb-0"><i className="bi bi-clock me-1"></i>{selectedEvent.time}</p>
+                                            {selectedEvent.time && (
+                                                <p className="text-muted mb-0"><i className="bi bi-clock me-1"></i>{selectedEvent.time}</p>
+                                            )}
                                         </div>
                                     </div>
-                                    <p className="mb-0">{selectedEvent.description}</p>
-                                    <p className="text-muted mt-2 mb-0"><i className="bi bi-geo-alt me-1"></i>{selectedEvent.location}</p>
+                                    {selectedEvent.description && (
+                                        <p className="mb-0">{selectedEvent.description}</p>
+                                    )}
+                                    {selectedEvent.location && (
+                                        <p className="text-muted mt-2 mb-0"><i className="bi bi-geo-alt me-1"></i>{selectedEvent.location}</p>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -204,7 +209,9 @@ export default function Calendar() {
                                         >
                                             <div className="upcoming-event-date">{dateFormatted}</div>
                                             <p className="upcoming-event-title">{evento.title}</p>
-                                            <span className="upcoming-event-time"><i className="bi bi-clock me-1"></i>{evento.time}</span>
+                                            {evento.time && (
+                                                <span className="upcoming-event-time"><i className="bi bi-clock me-1"></i>{evento.time}</span>
+                                            )}
                                         </div>
                                     );
                                 })

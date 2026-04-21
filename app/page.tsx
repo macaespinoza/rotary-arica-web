@@ -1,8 +1,18 @@
+import { cookies } from 'next/headers';
 import Countdown from "../components/Countdown";
 import Gallery from "../components/Gallery";
 import Calendar from "../components/Calendar";
+import { createClient } from "@/utils/supabase/server";
 
-export default function Home() {
+export default async function Home() {
+  // Fetch events server-side so the calendar always shows current data from Supabase
+  const cookieStore = await cookies();
+  const supabase = createClient(cookieStore);
+  const { data: events } = await supabase
+    .from('events')
+    .select('date, title, time, description, location')
+    .order('date', { ascending: true });
+
   return (
     <>
       
@@ -39,6 +49,11 @@ export default function Home() {
                     </li>
                     <li className="nav-item">
                         <a className="nav-link" href="#contacto">Contacto</a>
+                    </li>
+                    <li className="nav-item ms-lg-2 d-flex align-items-center">
+                        <a className="nav-link" href="/admin" aria-label="Administración" title="Administración">
+                            <i className="bi bi-gear" style={{ opacity: 0.5, fontSize: '0.9rem' }}></i>
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -187,7 +202,7 @@ export default function Home() {
     
     
     
-    <Calendar />
+    <Calendar events={events ?? []} />
 
 
     
@@ -226,6 +241,9 @@ export default function Home() {
                         <a href="#" aria-label="Instagram"><i className="bi bi-instagram"></i></a>
                         <a href="#" aria-label="YouTube"><i className="bi bi-youtube"></i></a>
                         <a href="#" aria-label="LinkedIn"><i className="bi bi-linkedin"></i></a>
+                        <a href="/admin" aria-label="Administración" title="Administración" className="ms-3">
+                            <i className="bi bi-gear" style={{ opacity: 0.3 }}></i>
+                        </a>
                     </div>
                 </div>
             </div>

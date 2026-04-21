@@ -1,34 +1,34 @@
 import { cookies } from 'next/headers'
 import { createClient } from '@/utils/supabase/server'
-import GaleriaForm from './GaleriaForm'
+import PapelitoForm from './PapelitoForm'
 
-export default async function GaleriaPage() {
+export default async function PapelitoPage() {
   const cookieStore = await cookies()
   const supabase = createClient(cookieStore)
 
   const { data: items, error } = await supabase
-    .from('gallery')
-    .select('id, image_url, category, caption, created_at')
-    .order('created_at', { ascending: false })
+    .from('papelitos')
+    .select('id, title, pdf_url, date_published, created_at')
+    .order('date_published', { ascending: false })
 
   return (
     <div className="p-4">
       <div className="mb-4">
         <h1 className="h3 fw-bold mb-1" style={{ color: '#003f7f' }}>
-          <i className="bi bi-images me-2"></i>Galería de Fotos
+          <i className="bi bi-file-earmark-pdf me-2"></i>El Papelito
         </h1>
         <p className="text-muted mb-0">
-          Sube imágenes al bucket <code>gallery-images</code> y adminístralas aquí.
+          Administra las ediciones del boletín oficial del club. Los PDFs se guardan en el bucket <code>papelitos-pdf</code>.
         </p>
         {error && (
           <div className="alert alert-warning mt-3" role="alert">
             <i className="bi bi-exclamation-triangle me-2"></i>
-            Error cargando imágenes: {error.message}
+            Error cargando boletines: {error.message}
           </div>
         )}
       </div>
 
-      <GaleriaForm items={items ?? []} />
+      <PapelitoForm items={items ?? []} />
     </div>
   )
 }
