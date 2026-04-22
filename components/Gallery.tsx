@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { createClient } from "@/utils/supabase/client";
 
 interface GalleryImage {
@@ -13,9 +13,8 @@ interface GalleryImage {
 
 export default function Gallery() {
     const [images, setImages] = useState<GalleryImage[]>([]);
-    const [filter, setFilter] = useState("all");
     const [loading, setLoading] = useState(true);
-    const [selectedImage, setSelectedImage] = useState<{ url: string; caption: string } | null>(null);
+    const [currentIndex, setCurrentIndex] = useState<number | null>(null);
 
     const supabase = createClient();
 
@@ -50,7 +49,31 @@ export default function Gallery() {
         fetchImages();
     }, []);
 
-    const filteredImages = filter === "all" ? images : images.filter(img => img.category === filter);
+    const nextImage = useCallback(() => {
+        if (currentIndex !== null && images.length > 0) {
+            setCurrentIndex((prev) => (prev! + 1) % images.length);
+        }
+    }, [currentIndex, images.length]);
+
+    const prevImage = useCallback(() => {
+        if (currentIndex !== null && images.length > 0) {
+            setCurrentIndex((prev) => (prev! - 1 + images.length) % images.length);
+        }
+    }, [currentIndex, images.length]);
+
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (currentIndex === null) return;
+            if (e.key === "ArrowRight") nextImage();
+            if (e.key === "ArrowLeft") prevImage();
+            if (e.key === "Escape") setCurrentIndex(null);
+        };
+        window.addEventListener("keydown", handleKeyDown);
+        return () => window.removeEventListener("keydown", handleKeyDown);
+    }, [currentIndex, nextImage, prevImage]);
+
+    const visibleImages = images.slice(0, 9);
+    const hasMore = images.length > 9;
 
     return (
         <section id="galeria" className="section-padding bg-light-rotary">
@@ -61,45 +84,75 @@ export default function Gallery() {
                     <p className="section-description mt-3">Momentos que reflejan nuestro compromiso con la comunidad.</p>
                 </div>
 
-                <div className="gallery-filters text-center mb-4">
-                    <button className={`btn btn-filter ${filter === "all" ? "active" : ""}`} onClick={() => setFilter("all")}>Todas</button>
-                    <button className={`btn btn-filter ${filter === "eventos" ? "active" : ""}`} onClick={() => setFilter("eventos")}>Eventos</button>
-                    <button className={`btn btn-filter ${filter === "proyectos" ? "active" : ""}`} onClick={() => setFilter("proyectos")}>Proyectos</button>
-                    <button className={`btn btn-filter ${filter === "comunidad" ? "active" : ""}`} onClick={() => setFilter("comunidad")}>Comunidad</button>
-                </div>
-
                 {loading ? (
                     <div className="text-center py-5">
                         <div className="spinner-border text-primary" role="status"></div>
                     </div>
                 ) : (
-                    <div className="row g-3" id="galleryGrid">
-                        {filteredImages.map((img) => (
-                            <div key={img.id} className="col-lg-4 col-md-6 gallery-item animate-fade-in">
-                                <div className="gallery-card" onClick={() => setSelectedImage({ url: img.image_url, caption: img.caption })}>
-                                    <img src={img.image_url} alt={img.caption} loading="lazy" />
-                                    <div className="gallery-overlay">
-                                        <i className="bi bi-zoom-in"></i>
+                    <>
+                        <div className="row g-3" id="galleryGrid">
+                            {visibleImages.map((img, index) => (
+                                <div key={img.id} className="col-lg-4 col-md-6 gallery-item animate-fade-in">
+                                    <div className="gallery-card" onClick={() => setCurrentIndex(index)}>
+                                        <img src={img.image_url} alt={img.caption} loading="lazy" />
+                                        <div className="gallery-overlay">
+                                            <i className="bi bi-zoom-in"></i>
+                                        </div>
                                     </div>
                                 </div>
+                            ))}
+                        </div>
+                        
+                        {hasMore && (
+                            <div className="text-center mt-5">
+                                <button 
+                                    className="btn btn-rotary-gold" 
+                                    onClick={() => setCurrentIndex(9)}
+                                >
+                                    Ver más fotos <i className="bi bi-plus-circle ms-2"></i>
+                                </button>
                             </div>
-                        ))}
-                    </div>
+                        )}
+                    </>
                 )}
             </div>
 
-            {selectedImage && (
-                <div className="modal show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.8)' }} onClick={() => setSelectedImage(null)}>
-                    <div className="modal-dialog modal-dialog-centered modal-lg" onClick={(e) => e.stopPropagation()}>
-                        <div className="modal-content bg-dark border-0">
-                            <div className="modal-header border-0 pb-0">
-                                <button type="button" className="btn-close btn-close-white" onClick={() => setSelectedImage(null)} aria-label="Cerrar"></button>
+            {currentIndex !== null && (
+                <div className="modal show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.9)', zIndex: 1055 }} onClick={() => setCurrentIndex(null)}>
+                    <button 
+                        className="lightbox-nav-btn lightbox-prev" 
+                        onClick={(e) => { e.stopPropagation(); prevImage(); }}
+                        aria-label="Anterior"
+                    >
+                        <i className="bi bi-chevron-left"></i>
+                    </button>
+                    
+                    <button 
+                        className="lightbox-nav-btn lightbox-next" 
+                        onClick={(e) => { e.stopPropagation(); nextImage(); }}
+                        aria-label="Siguiente"
+                    >
+                        <i className="bi bi-chevron-right"></i>
+                    </button>
+
+                    <div className="modal-dialog modal-dialog-centered modal-xl" onClick={(e) => e.stopPropagation()}>
+                        <div className="modal-content bg-transparent border-0">
+                            <div className="modal-header border-0 position-absolute end-0 top-0" style={{ zIndex: 1 }}>
+                                <button type="button" className="btn-close btn-close-white" onClick={() => setCurrentIndex(null)} aria-label="Cerrar"></button>
                             </div>
                             <div className="modal-body text-center p-0">
-                                <img src={selectedImage.url} alt={selectedImage.caption} className="img-fluid rounded" style={{ maxHeight: "80vh", objectFit: "contain" }} />
+                                <img 
+                                    src={images[currentIndex].image_url} 
+                                    alt={images[currentIndex].caption} 
+                                    className="img-fluid rounded shadow-lg" 
+                                    style={{ maxHeight: "85vh", objectFit: "contain" }} 
+                                />
                             </div>
-                            <div className="modal-footer border-0 justify-content-center">
-                                <p className="text-white mb-0 fs-5">{selectedImage.caption}</p>
+                            <div className="modal-footer border-0 justify-content-center bg-dark bg-opacity-50 mt-3 rounded-pill mx-auto px-4 py-2" style={{ width: 'fit-content' }}>
+                                <p className="text-white mb-0 fs-6">
+                                    {images[currentIndex].caption || "Galería Rotary Club Arica"} 
+                                    <span className="ms-3 opacity-75">({currentIndex + 1} / {images.length})</span>
+                                </p>
                             </div>
                         </div>
                     </div>

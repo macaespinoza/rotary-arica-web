@@ -648,6 +648,55 @@ img {
     display: none;
 }
 
+/* Navegación Lightbox */
+.lightbox-nav-btn {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    font-size: 2.5rem;
+    padding: 10px;
+    cursor: pointer;
+    transition: var(--transition-base);
+    border-radius: 50%;
+    z-index: 1060;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 65px;
+    height: 65px;
+}
+
+.lightbox-nav-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    color: var(--rotary-gold);
+}
+
+.lightbox-prev {
+    left: 30px;
+}
+
+.lightbox-next {
+    right: 30px;
+}
+
+@media (max-width: 768px) {
+    .lightbox-nav-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+        background: rgba(0, 0, 0, 0.3);
+    }
+    .lightbox-prev {
+        left: 10px;
+    }
+    .lightbox-next {
+        right: 10px;
+    }
+}
+
 
 /* --------------------------------------------------------------------------
    CALENDARIO DE EVENTOS
