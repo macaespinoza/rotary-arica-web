@@ -18,9 +18,9 @@ async function getAdminSession() {
   try {
     const cookieStore = await cookies()
     const supabase = createClient(cookieStore)
-    const { data, error } = await supabase.auth.getClaims()
-    if (error || !data?.claims) return null
-    return data.claims
+    const { data: { user }, error } = await supabase.auth.getUser()
+    if (error || !user) return null
+    return user
   } catch {
     return null
   }
@@ -31,15 +31,15 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode
 }) {
-  const claims = await getAdminSession()
+  const user = await getAdminSession()
 
   // Si no hay sesión, mostrar solo children (el middleware ya redirigió si era necesario)
   // Esto previene el redirect loop en /admin/login que hereda este layout
-  if (!claims) {
+  if (!user) {
     return <>{children}</>
   }
 
-  const userEmail = claims.email as string
+  const userEmail = user.email as string
 
 
   return (

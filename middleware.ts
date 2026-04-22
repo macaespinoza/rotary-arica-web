@@ -10,7 +10,7 @@ export async function middleware(request: NextRequest) {
   }
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || process.env.SUPABASE_ANON_KEY
 
   if (!supabaseUrl || !supabaseKey) {
     if (pathname !== '/admin/login') {
@@ -39,11 +39,10 @@ export async function middleware(request: NextRequest) {
     },
   })
 
-  // Usamos getClaims() — valida el JWT localmente sin llamada de red.
-  // Es más confiable en middleware que getUser() que requiere un round-trip a Supabase.
-  const { data, error } = await supabase.auth.getClaims()
+  // Usamos getUser() — valida la sesión contra Supabase y es el método oficial.
+  const { data: { user }, error } = await supabase.auth.getUser()
 
-  if (error || !data?.claims) {
+  if (error || !user) {
     if (pathname !== '/admin/login') {
       const loginUrl = request.nextUrl.clone()
       loginUrl.pathname = '/admin/login'

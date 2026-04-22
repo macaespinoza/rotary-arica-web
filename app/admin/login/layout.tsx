@@ -7,11 +7,11 @@ export default async function LoginLayout({ children }: { children: React.ReactN
   const supabase = createClient(cookieStore)
   
   // Verificamos si hay una sesión activa directamente en el servidor
-  const { data } = await supabase.auth.getClaims()
+  const { data: { user } } = await supabase.auth.getUser()
 
   // Si el usuario ya está autenticado (tiene sesión), 
   // lo sacamos inmediatamente de la vista de login hacia el Dashboard
-  if (data?.claims) {
+  if (user) {
     redirect('/admin')
   }
 
