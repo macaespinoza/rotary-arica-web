@@ -121,49 +121,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // =========================================================================
     // 6. CALENDARIO INTERACTIVO: Migrated to React Component
 
-    // 7. EL PAPELITO CARRUSEL LOGIC
-    // =========================================================================
-    const papelitoCarouselInner = document.getElementById('papelitoCarouselInner');
-    if (papelitoCarouselInner) {
-        fetch('assets/papelito/metadata.json')
-            .then(response => response.json())
-            .then(data => {
-                // Ordenar por fecha descendente y tomar los primeros 5
-                const latestDocs = data.sort((a, b) => new Date(b.fechaPublicacion) - new Date(a.fechaPublicacion)).slice(0, 5);
-                
-                if (latestDocs.length === 0) {
-                    papelitoCarouselInner.innerHTML = '<div class="text-center py-5 text-muted">No hay documentos disponibles por ahora.</div>';
-                    return;
-                }
+    // 7. EL PAPELITO CARRUSEL LOGIC: Migrated to Server-Side Rendering in app/page.tsx
 
-                papelitoCarouselInner.innerHTML = '';
-                
-                latestDocs.forEach((doc, index) => {
-                    const isActive = index === 0 ? 'active' : '';
-                    const imgUrl = doc.miniatura ? doc.miniatura : 'https://placehold.co/800x400/0b3c5d/ffffff?text=Edición+Papelito';
-                    const dateFormatted = new Date(doc.fechaPublicacion).toLocaleDateString('es-CL', { month: 'long', year: 'numeric' });
-                    
-                    const itemHtml = `
-                        <div class="carousel-item ${isActive}">
-                            <div class="d-flex justify-content-center">
-                                <div class="card bg-dark text-white text-center border-0" style="max-width: 600px;">
-                                    <img src="${imgUrl}" class="card-img" alt="${doc.titulo}" style="opacity: 0.6; max-height: 400px; object-fit: cover;">
-                                    <div class="card-img-overlay d-flex flex-column justify-content-center align-items-center">
-                                        <h3 class="card-title fw-bold text-shadow">${doc.titulo}</h3>
-                                        <p class="card-text fs-5 text-shadow">Publicado: ${dateFormatted}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    papelitoCarouselInner.insertAdjacentHTML('beforeend', itemHtml);
-                });
-            })
-            .catch(error => {
-                console.error("Error al cargar la data de El Papelito:", error);
-                papelitoCarouselInner.innerHTML = '<div class="text-center py-5 text-danger">Error al cargar las ediciones recientes.</div>';
-            });
-    }
 
 
     // =========================================================================

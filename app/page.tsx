@@ -13,6 +13,12 @@ export default async function Home() {
     .select('date, title, time, description, location, image_url, link')
     .order('date', { ascending: true });
 
+  const { data: papelitos } = await supabase
+    .from('papelitos')
+    .select('id, title, pdf_url, date_published')
+    .order('date_published', { ascending: false })
+    .limit(5);
+
   return (
     <>
       
@@ -174,12 +180,34 @@ export default async function Home() {
 
             <div id="papelitoCarousel" className="carousel slide" data-bs-ride="carousel">
                 <div className="carousel-inner" id="papelitoCarouselInner">
-                    
-                    <div className="text-center py-5">
-                        <div className="spinner-border text-primary" role="status">
-                            <span className="visually-hidden">Cargando...</span>
+                    {(!papelitos || papelitos.length === 0) ? (
+                        <div className="text-center py-5 text-muted">
+                            <i className="bi bi-file-earmark-pdf mb-3 d-block" style={{ fontSize: '3rem', opacity: 0.3 }}></i>
+                            No hay boletines disponibles por ahora.
                         </div>
-                    </div>
+                    ) : (
+                        papelitos.map((doc, index) => {
+                            const dateFormatted = doc.date_published 
+                                ? new Date(doc.date_published + 'T00:00:00').toLocaleDateString('es-CL', { month: 'long', year: 'numeric' })
+                                : 'Sin fecha';
+                            const imgUrl = 'https://placehold.co/800x400/0b3c5d/ffffff?text=Edición+Papelito';
+                            
+                            return (
+                                <div key={doc.id} className={`carousel-item ${index === 0 ? 'active' : ''}`}>
+                                    <div className="d-flex justify-content-center">
+                                        <div className="card bg-dark text-white text-center border-0 overflow-hidden" style={{ maxWidth: '600px', borderRadius: '15px' }}>
+                                            <img src={imgUrl} className="card-img" alt={doc.title} style={{ opacity: 0.6, maxHeight: '400px', objectFit: 'cover' }} />
+                                            <div className="card-img-overlay d-flex flex-column justify-content-center align-items-center">
+                                                <h3 className="card-title fw-bold text-shadow mb-2">{doc.title || 'Boletín Oficial'}</h3>
+                                                <p className="card-text fs-5 text-shadow mb-4">Publicado: {dateFormatted}</p>
+                                                <a href="papelito.html" className="btn btn-rotary-gold px-4">Ver esta edición</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        })
+                    )}
                 </div>
                 <button className="carousel-control-prev" type="button" data-bs-target="#papelitoCarousel" data-bs-slide="prev">
                     <span className="carousel-control-prev-icon bg-dark rounded-circle p-3" aria-hidden="true"></span>
