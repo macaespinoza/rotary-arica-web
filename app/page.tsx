@@ -57,7 +57,7 @@ export default async function Home() {
                         <a className="nav-link" href="#contacto">Contacto</a>
                     </li>
                     <li className="nav-item ms-lg-2 d-flex align-items-center">
-                        <a className="nav-link" href="/admin" aria-label="Administración" title="Administración">
+                        <a className="nav-link" href="/admin" aria-label="Administración" title="Administración" target="_blank" rel="noopener noreferrer">
                             <i className="bi bi-gear" style={{ opacity: 0.5, fontSize: '0.9rem' }}></i>
                         </a>
                     </li>
@@ -286,7 +286,7 @@ export default async function Home() {
                         <a href="#" aria-label="Instagram"><i className="bi bi-instagram"></i></a>
                         <a href="#" aria-label="YouTube"><i className="bi bi-youtube"></i></a>
                         <a href="#" aria-label="LinkedIn"><i className="bi bi-linkedin"></i></a>
-                        <a href="/admin" aria-label="Administración" title="Administración" className="ms-3">
+                        <a href="/admin" aria-label="Administración" title="Administración" className="ms-3" target="_blank" rel="noopener noreferrer">
                             <i className="bi bi-gear" style={{ opacity: 0.3 }}></i>
                         </a>
                     </div>

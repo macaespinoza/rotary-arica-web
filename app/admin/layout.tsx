@@ -124,6 +124,11 @@ export default async function AdminLayout({
               </p>
             </div>
           </div>
+          <Link href="/" className="btn btn-sm w-100 d-flex align-items-center justify-content-center gap-2 mb-3"
+            style={{ background: '#FFBE00', color: '#002855', fontWeight: 'bold', border: 'none', borderRadius: 8 }}>
+            <i className="bi bi-house-door-fill"></i>
+            Volver al Sitio
+          </Link>
           <form action={signOut}>
             <button type="submit" id="btn-signout" className="btn btn-sm w-100 d-flex align-items-center justify-content-center gap-2"
               style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.8)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: 8 }}>
@@ -131,11 +136,6 @@ export default async function AdminLayout({
               Cerrar Sesión
             </button>
           </form>
-          <div className="text-center mt-3">
-            <a href="/" style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.7rem', textDecoration: 'none' }}>
-              <i className="bi bi-house me-1"></i>Ver sitio web
-            </a>
-          </div>
         </div>
       </aside>
 

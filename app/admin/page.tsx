@@ -47,13 +47,19 @@ export default async function AdminDashboard() {
   return (
     <div className="p-4">
       {/* Header */}
-      <div className="mb-5">
-        <h1 className="h3 fw-bold mb-1" style={{ color: '#003f7f' }}>
-          <i className="bi bi-speedometer2 me-2"></i>Dashboard
-        </h1>
-        <p className="text-muted mb-0">
-          Bienvenido al panel de administración del Rotary Club Arica.
-        </p>
+      <div className="mb-5 d-flex justify-content-between align-items-start">
+        <div>
+          <h1 className="h3 fw-bold mb-1" style={{ color: '#003f7f' }}>
+            <i className="bi bi-speedometer2 me-2"></i>Dashboard
+          </h1>
+          <p className="text-muted mb-0">
+            Bienvenido al panel de administración del Rotary Club Arica.
+          </p>
+        </div>
+        <Link href="/" className="btn btn-outline-secondary d-flex align-items-center gap-2">
+          <i className="bi bi-house"></i>
+          Volver al Inicio
+        </Link>
       </div>
 
       {/* Tarjetas de estadísticas */}
