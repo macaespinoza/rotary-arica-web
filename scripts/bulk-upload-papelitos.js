@@ -39,12 +39,11 @@ async function main() {
     console.log(`[${i + 1}/${files.length}] Procesando: ${file}...`);
 
     try {
-      // 1. Extraer título (remover la extensión, generar algo presentable)
-      // Ej: "El Papelito N42 - 2024-03-15.pdf" -> "El Papelito N42 - 2024-03-15"
+      // 1. Extraer título (si falla, dejar null para que el usuario lo edite luego)
       let title = file.replace(/\.pdf$/i, '').replace(/[_-]/g, ' ');
-
-      // 2. Extraer fecha (buscar patrón YYYY-MM-DD), si no hay usar hoy
-      let datePublished = new Date().toISOString().split('T')[0];
+      
+      // 2. Extraer fecha (buscar patrón YYYY-MM-DD), si no hay dejar null
+      let datePublished = null;
       const dateMatch = file.match(/\d{4}-\d{2}-\d{2}/);
       if (dateMatch) {
         datePublished = dateMatch[0];

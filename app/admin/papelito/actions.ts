@@ -9,8 +9,8 @@ import { createClient } from '@/utils/supabase/server'
  */
 export async function savePapelito(
   pdfUrl: string,
-  title: string,
-  datePublished: string
+  title: string | null,
+  datePublished: string | null
 ): Promise<{ error?: string }> {
   const cookieStore = await cookies()
   const supabase = createClient(cookieStore)
@@ -30,8 +30,8 @@ export async function savePapelito(
  */
 export async function updatePapelito(
   id: string,
-  title: string,
-  datePublished: string
+  title: string | null,
+  datePublished: string | null
 ): Promise<{ error?: string }> {
   const cookieStore = await cookies()
   const supabase = createClient(cookieStore)

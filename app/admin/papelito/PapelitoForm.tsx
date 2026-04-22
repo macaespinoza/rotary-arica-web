@@ -35,8 +35,8 @@ export default function PapelitoForm({ items }: { items: Papelito[] }) {
     e.preventDefault()
     if (!file) return setFeedback({ type: 'error', msg: 'Selecciona un archivo PDF.' })
     
-    // Validación de tamaño (Máximo 10MB)
-    const MAX_SIZE_MB = 10;
+    // Validación de tamaño (Máximo 50MB)
+    const MAX_SIZE_MB = 50;
     if (file.size > MAX_SIZE_MB * 1024 * 1024) {
       return setFeedback({ type: 'error', msg: `El archivo es demasiado grande (${(file.size / (1024 * 1024)).toFixed(1)}MB). El límite es ${MAX_SIZE_MB}MB.` })
     }
@@ -61,7 +61,11 @@ export default function PapelitoForm({ items }: { items: Papelito[] }) {
         .from('papelitos-pdf')
         .getPublicUrl(fileName)
 
-      const result = await savePapelito(urlData.publicUrl, title.trim(), datePublished)
+      const result = await savePapelito(
+        urlData.publicUrl, 
+        title.trim() || file.name.replace(/\.[^/.]+$/, "").replace(/[_-]/g, ' '), 
+        datePublished || null
+      )
       if (result.error) throw new Error(result.error)
 
       setFeedback({ type: 'success', msg: '¡Papelito publicado correctamente!' })
@@ -136,10 +140,9 @@ export default function PapelitoForm({ items }: { items: Papelito[] }) {
                   id="papelito-title"
                   type="text"
                   className="form-control"
-                  placeholder="El Papelito — Edición N° 42"
+                  placeholder="Título (opcional)"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  required
                 />
               </div>
               <div className="col-md-3">
@@ -152,7 +155,6 @@ export default function PapelitoForm({ items }: { items: Papelito[] }) {
                   className="form-control"
                   value={datePublished}
                   onChange={(e) => setDatePublished(e.target.value)}
-                  required
                 />
               </div>
               <div className="col-md-3">
@@ -261,12 +263,15 @@ export default function PapelitoForm({ items }: { items: Papelito[] }) {
                   </div>
                 ) : (
                   <div className="flex-grow-1">
-                    <p className="fw-semibold mb-0">{item.title}</p>
+                    <p className="fw-semibold mb-0">{item.title || 'Edición sin título'}</p>
                     <small className="text-muted">
                       <i className="bi bi-calendar2 me-1"></i>
-                      {new Date(item.date_published + 'T00:00:00').toLocaleDateString('es-CL', {
-                        day: 'numeric', month: 'long', year: 'numeric',
-                      })}
+                      {item.date_published 
+                        ? new Date(item.date_published + 'T00:00:00').toLocaleDateString('es-CL', {
+                            day: 'numeric', month: 'long', year: 'numeric',
+                          })
+                        : 'Sin fecha de publicación'
+                      }
                     </small>
                   </div>
                 )}
