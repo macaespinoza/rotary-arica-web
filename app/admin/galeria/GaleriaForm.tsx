@@ -64,28 +64,45 @@ export default function GaleriaForm({ items }: { items: GalleryItem[] }) {
     if (files.length === 0) return setFeedback({ type: 'error', msg: 'Selecciona al menos una imagen antes de subir.' })
 
     setUploading(true)
-    setFeedback({ type: 'success', msg: `Procesando y subiendo ${files.length} imágenes... Por favor, no cierres esta pestaña.` })
+    setFeedback({ type: 'success', msg: `Iniciando subida de ${files.length} imágenes...` })
 
     try {
-      // 1. Enviar archivos al API route de procesamiento (sharp)
-      const formData = new FormData()
-      files.forEach(f => formData.append('images', f))
-
-      const res = await fetch('/api/process-images', {
-        method: 'POST',
-        body: formData
-      })
+      const allUrls: string[] = []
       
-      const data = await res.json()
-      
-      if (!res.ok) throw new Error(data.error || 'Error procesando imágenes')
-      if (!data.urls || data.urls.length === 0) throw new Error('No se devolvieron URLs')
+      // Subir imágenes una por una para evitar límites de tamaño de payload (Request Entity Too Large)
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i]
+        setFeedback({ 
+          type: 'success', 
+          msg: `Procesando imagen ${i + 1} de ${files.length}: ${file.name}...` 
+        })
 
-      // 2. Importación dinámica de la acción para evitar bugs de dependencias circulares
+        const formData = new FormData()
+        formData.append('images', file)
+
+        const res = await fetch('/api/process-images', {
+          method: 'POST',
+          body: formData
+        })
+        
+        const data = await res.json()
+        
+        if (!res.ok) {
+          throw new Error(data.error || `Error procesando la imagen ${i + 1}: ${file.name}`)
+        }
+
+        if (data.urls && data.urls.length > 0) {
+          allUrls.push(...data.urls)
+        }
+      }
+
+      if (allUrls.length === 0) throw new Error('No se pudieron procesar las imágenes')
+
+      // 2. Importación dinámica de la acción
       const { saveGalleryImages } = await import('./actions')
       
-      // 3. Guardar en base de datos
-      const payload = data.urls.map((url: string) => ({
+      // 3. Guardar en base de datos (esto es un solo registro por lote de URLs, pero ya procesadas)
+      const payload = allUrls.map((url: string) => ({
         imageUrl: url,
         category,
         caption
@@ -94,7 +111,7 @@ export default function GaleriaForm({ items }: { items: GalleryItem[] }) {
       const result = await saveGalleryImages(payload)
       if (result.error) throw new Error(result.error)
 
-      setFeedback({ type: 'success', msg: `¡${data.urls.length} imágenes subidas correctamente!` })
+      setFeedback({ type: 'success', msg: `¡${allUrls.length} imágenes subidas correctamente!` })
       setFiles([])
       setPreviews([])
       setCaption('')
