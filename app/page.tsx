@@ -10,7 +10,7 @@ export default async function Home() {
   const supabase = createClient(cookieStore);
   const { data: events } = await supabase
     .from('events')
-    .select('date, title, time, description, location')
+    .select('date, title, time, description, location, image_url, link')
     .order('date', { ascending: true });
 
   return (

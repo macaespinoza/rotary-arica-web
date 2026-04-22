@@ -8,7 +8,7 @@ export default async function EventosPage() {
 
   const { data: events, error } = await supabase
     .from('events')
-    .select('id, title, date, time, description, location, created_at')
+    .select('id, title, date, time, description, location, image_url, link, created_at')
     .order('date', { ascending: true })
 
   return (

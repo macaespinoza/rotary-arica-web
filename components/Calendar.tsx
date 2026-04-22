@@ -8,6 +8,8 @@ export type CalendarEvent = {
   time?: string | null;
   description?: string | null;
   location?: string | null;
+  image_url?: string | null;
+  link?: string | null;
 };
 
 const MONTH_NAMES = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
@@ -175,12 +177,29 @@ export default function Calendar({ events }: { events: CalendarEvent[] }) {
                                             )}
                                         </div>
                                     </div>
-                                    {selectedEvent.description && (
-                                        <p className="mb-0">{selectedEvent.description}</p>
-                                    )}
-                                    {selectedEvent.location && (
-                                        <p className="text-muted mt-2 mb-0"><i className="bi bi-geo-alt me-1"></i>{selectedEvent.location}</p>
-                                    )}
+                                    <div className="row g-3 mt-1">
+                                        <div className={selectedEvent.image_url ? "col-md-7" : "col-12"}>
+                                            {selectedEvent.description && (
+                                                <p className="mb-2">{selectedEvent.description}</p>
+                                            )}
+                                            {selectedEvent.location && (
+                                                <p className="text-muted mt-2 mb-0"><i className="bi bi-geo-alt me-1"></i>{selectedEvent.location}</p>
+                                            )}
+                                            {selectedEvent.link && (
+                                                <div className="mt-3">
+                                                    <a href={selectedEvent.link} target="_blank" rel="noopener noreferrer" className="btn btn-sm" style={{ backgroundColor: '#003f7f', color: '#fff' }}>
+                                                        <i className="bi bi-box-arrow-up-right me-2"></i>Más información
+                                                    </a>
+                                                </div>
+                                            )}
+                                        </div>
+                                        {selectedEvent.image_url && (
+                                            <div className="col-md-5 text-center">
+                                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                <img src={selectedEvent.image_url} alt="Afiche" className="img-fluid rounded border" style={{ maxHeight: '200px', objectFit: 'contain' }} />
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -190,7 +209,11 @@ export default function Calendar({ events }: { events: CalendarEvent[] }) {
                         <h4 className="mb-3"><i className="bi bi-calendar-event me-2"></i>Próximos Eventos</h4>
                         <div className="list-group">
                             {upcomingEvents.length === 0 ? (
-                                <p className="text-muted">No hay eventos próximos programados.</p>
+                                <div className="text-center py-5 border rounded bg-light">
+                                    <i className="bi bi-calendar-check text-muted" style={{ fontSize: '3rem' }}></i>
+                                    <h5 className="mt-3 text-muted">Aún no hay próximos eventos</h5>
+                                    <p className="text-muted mb-0">Revisa pronto para conocer nuestras actividades y sumarte a la acción.</p>
+                                </div>
                             ) : (
                                 upcomingEvents.map((evento, idx) => {
                                     const d = new Date(evento.date + 'T00:00:00');

@@ -34,11 +34,18 @@ export default function PapelitoForm({ items }: { items: Papelito[] }) {
   async function handleUpload(e: React.FormEvent) {
     e.preventDefault()
     if (!file) return setFeedback({ type: 'error', msg: 'Selecciona un archivo PDF.' })
+    
+    // Validación de tamaño (Máximo 10MB)
+    const MAX_SIZE_MB = 10;
+    if (file.size > MAX_SIZE_MB * 1024 * 1024) {
+      return setFeedback({ type: 'error', msg: `El archivo es demasiado grande (${(file.size / (1024 * 1024)).toFixed(1)}MB). El límite es ${MAX_SIZE_MB}MB.` })
+    }
+
     if (!title.trim()) return setFeedback({ type: 'error', msg: 'Ingresa el título del boletín.' })
     if (!datePublished) return setFeedback({ type: 'error', msg: 'Selecciona la fecha de publicación.' })
 
     setUploading(true)
-    setFeedback(null)
+    setFeedback({ type: 'success', msg: 'Subiendo archivo... por favor espera.' })
 
     try {
       const supabase = createClient()

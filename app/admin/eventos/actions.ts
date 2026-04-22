@@ -11,6 +11,8 @@ export type EventRow = {
   time: string | null
   description: string | null
   location: string | null
+  image_url: string | null
+  link: string | null
   created_at: string
 }
 
@@ -30,6 +32,8 @@ export async function createEvento(
     time: (formData.get('time') as string) || null,
     description: (formData.get('description') as string) || null,
     location: (formData.get('location') as string) || null,
+    image_url: (formData.get('image_url') as string) || null,
+    link: (formData.get('link') as string) || null,
   }
 
   if (!payload.title || !payload.date) {
@@ -53,7 +57,9 @@ export async function updateEvento(
   date: string,
   time: string,
   description: string,
-  location: string
+  location: string,
+  image_url: string,
+  link: string
 ): Promise<{ error?: string }> {
   const cookieStore = await cookies()
   const supabase = createClient(cookieStore)
@@ -66,6 +72,8 @@ export async function updateEvento(
       time: time || null,
       description: description || null,
       location: location || null,
+      image_url: image_url || null,
+      link: link || null,
     })
     .eq('id', id)
 
@@ -77,11 +85,20 @@ export async function updateEvento(
 }
 
 /**
- * Elimina un evento por ID.
+ * Elimina un evento por ID. Opcionalmente borra su imagen asociada.
  */
-export async function deleteEvento(id: string): Promise<{ error?: string }> {
+export async function deleteEvento(id: string, imageUrl?: string | null): Promise<{ error?: string }> {
   const cookieStore = await cookies()
   const supabase = createClient(cookieStore)
+
+  if (imageUrl) {
+    const marker = '/object/public/event-images/'
+    const idx = imageUrl.indexOf(marker)
+    if (idx !== -1) {
+      const filePath = imageUrl.slice(idx + marker.length)
+      await supabase.storage.from('event-images').remove([filePath])
+    }
+  }
 
   const { error } = await supabase.from('events').delete().eq('id', id)
   if (error) return { error: error.message }

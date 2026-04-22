@@ -2,8 +2,7 @@
 
 import { useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
-import { createClient } from '@/utils/supabase/client'
-import { saveGalleryImage, deleteGalleryImage } from './actions'
+import { deleteGalleryImage } from './actions'
 
 const CATEGORIAS = [
   'Eventos',
@@ -25,8 +24,11 @@ type GalleryItem = {
 export default function GaleriaForm({ items }: { items: GalleryItem[] }) {
   const router = useRouter()
   const fileRef = useRef<HTMLInputElement>(null)
-  const [preview, setPreview] = useState<string | null>(null)
-  const [file, setFile] = useState<File | null>(null)
+  
+  // En lugar de una sola imagen, almacenamos un arreglo
+  const [files, setFiles] = useState<File[]>([])
+  const [previews, setPreviews] = useState<string[]>([])
+  
   const [category, setCategory] = useState('General')
   const [caption, setCaption] = useState('')
   const [uploading, setUploading] = useState(false)
@@ -34,40 +36,69 @@ export default function GaleriaForm({ items }: { items: GalleryItem[] }) {
   const [feedback, setFeedback] = useState<{ type: 'success' | 'error'; msg: string } | null>(null)
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const f = e.target.files?.[0]
-    if (!f) return
-    setFile(f)
-    setPreview(URL.createObjectURL(f))
+    const selectedFiles = Array.from(e.target.files || [])
+    if (selectedFiles.length === 0) return
+    
+    // Limitar a máximo 100 archivos
+    if (selectedFiles.length > 100) {
+      setFeedback({ type: 'error', msg: 'Solo se pueden subir hasta 100 fotos a la vez.' })
+      return
+    }
+
+    setFiles(selectedFiles)
+    
+    // Crear previews temporales
+    const prevs = selectedFiles.map(f => URL.createObjectURL(f))
+    setPreviews(prevs)
   }
+
+  // Liberar memoria de previews al desmontar o cambiar
+  import('react').then((React) => {
+    React.useEffect(() => {
+      return () => {
+        previews.forEach(p => URL.revokeObjectURL(p))
+      }
+    }, [previews])
+  })
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    if (!file) return setFeedback({ type: 'error', msg: 'Selecciona una imagen antes de subir.' })
+    if (files.length === 0) return setFeedback({ type: 'error', msg: 'Selecciona al menos una imagen antes de subir.' })
 
     setUploading(true)
-    setFeedback(null)
+    setFeedback({ type: 'success', msg: `Procesando y subiendo ${files.length} imágenes... Por favor, no cierres esta pestaña.` })
 
     try {
-      const supabase = createClient()
-      const ext = file.name.split('.').pop()
-      const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
+      // 1. Enviar archivos al API route de procesamiento (sharp)
+      const formData = new FormData()
+      files.forEach(f => formData.append('images', f))
 
-      const { error: uploadError } = await supabase.storage
-        .from('gallery-images')
-        .upload(fileName, file, { cacheControl: '3600', upsert: false })
+      const res = await fetch('/api/process-images', {
+        method: 'POST',
+        body: formData
+      })
+      
+      const data = await res.json()
+      
+      if (!res.ok) throw new Error(data.error || 'Error procesando imágenes')
+      if (!data.urls || data.urls.length === 0) throw new Error('No se devolvieron URLs')
 
-      if (uploadError) throw new Error(uploadError.message)
+      // 2. Importación dinámica de la acción para evitar bugs de dependencias circulares
+      const { saveGalleryImages } = await import('./actions')
+      
+      // 3. Guardar en base de datos
+      const payload = data.urls.map((url: string) => ({
+        imageUrl: url,
+        category,
+        caption
+      }))
 
-      const { data: urlData } = supabase.storage
-        .from('gallery-images')
-        .getPublicUrl(fileName)
-
-      const result = await saveGalleryImage(urlData.publicUrl, category, caption)
+      const result = await saveGalleryImages(payload)
       if (result.error) throw new Error(result.error)
 
-      setFeedback({ type: 'success', msg: '¡Imagen subida correctamente!' })
-      setFile(null)
-      setPreview(null)
+      setFeedback({ type: 'success', msg: `¡${data.urls.length} imágenes subidas correctamente!` })
+      setFiles([])
+      setPreviews([])
       setCaption('')
       if (fileRef.current) fileRef.current.value = ''
       router.refresh()
@@ -116,26 +147,31 @@ export default function GaleriaForm({ items }: { items: GalleryItem[] }) {
             <div className="row g-3">
               {/* Zona de imagen */}
               <div className="col-md-4">
-                <label className="form-label fw-semibold">Imagen</label>
+                <label className="form-label fw-semibold">Imágenes (Max 100)</label>
                 <div
-                  className="border rounded-3 d-flex align-items-center justify-content-center"
+                  className="border rounded-3 d-flex flex-wrap align-items-center justify-content-center p-2"
                   style={{
-                    height: 180,
+                    minHeight: 180,
                     background: '#f8f9fa',
                     cursor: 'pointer',
                     overflow: 'hidden',
                     borderStyle: 'dashed !important',
+                    gap: '4px'
                   }}
                   onClick={() => fileRef.current?.click()}
                 >
-                  {preview ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={preview} alt="Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  {previews.length > 0 ? (
+                    previews.map((prev, idx) => (
+                      <div key={idx} style={{ width: 44, height: 44, overflow: 'hidden', borderRadius: 4 }}>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={prev} alt={`Preview ${idx}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      </div>
+                    ))
                   ) : (
                     <div className="text-center text-muted">
-                      <i className="bi bi-image" style={{ fontSize: '2.5rem' }}></i>
+                      <i className="bi bi-images" style={{ fontSize: '2.5rem' }}></i>
                       <p className="mb-0 mt-1" style={{ fontSize: '0.8rem' }}>
-                        Haz clic para seleccionar
+                        Haz clic para seleccionar múltiples
                       </p>
                     </div>
                   )}
@@ -145,6 +181,7 @@ export default function GaleriaForm({ items }: { items: GalleryItem[] }) {
                   id="gallery-file-input"
                   type="file"
                   accept="image/*"
+                  multiple
                   className="d-none"
                   onChange={handleFileChange}
                 />
@@ -184,10 +221,10 @@ export default function GaleriaForm({ items }: { items: GalleryItem[] }) {
                 <button
                   id="btn-upload-gallery"
                   type="submit"
-                  disabled={uploading || !file}
+                  disabled={uploading || files.length === 0}
                   className="btn mt-auto fw-semibold"
                   style={{
-                    background: uploading || !file ? '#6c757d' : '#003f7f',
+                    background: uploading || files.length === 0 ? '#6c757d' : '#003f7f',
                     color: '#fff',
                     borderRadius: 8,
                   }}
@@ -195,11 +232,11 @@ export default function GaleriaForm({ items }: { items: GalleryItem[] }) {
                   {uploading ? (
                     <>
                       <span className="spinner-border spinner-border-sm me-2" role="status"></span>
-                      Subiendo...
+                      Procesando y subiendo...
                     </>
                   ) : (
                     <>
-                      <i className="bi bi-cloud-arrow-up me-2"></i>Subir imagen
+                      <i className="bi bi-cloud-arrow-up me-2"></i>Subir {files.length > 0 ? `${files.length} imágenes` : 'imagen'}
                     </>
                   )}
                 </button>
