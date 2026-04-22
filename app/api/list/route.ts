@@ -7,10 +7,10 @@ export const dynamic = 'force-dynamic';
 export async function GET() {
   try {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
-    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY;
+    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || process.env.SUPABASE_ANON_KEY;
 
     if (!supabaseUrl || !supabaseKey) {
-      console.error("Supabase config missing in API route");
+      console.error("Supabase config missing in API route. Check environment variables.");
       return NextResponse.json({ error: "Configuración de Supabase no encontrada" }, { status: 500 });
     }
 
