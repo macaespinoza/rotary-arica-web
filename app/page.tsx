@@ -195,12 +195,29 @@ export default async function Home() {
                             return (
                                 <div key={doc.id} className={`carousel-item ${index === 0 ? 'active' : ''}`}>
                                     <div className="d-flex justify-content-center">
-                                        <div className="card bg-dark text-white text-center border-0 overflow-hidden" style={{ maxWidth: '600px', borderRadius: '15px' }}>
-                                            <img src={imgUrl} className="card-img" alt={doc.title} style={{ opacity: 0.6, maxHeight: '400px', objectFit: 'cover' }} />
-                                            <div className="card-img-overlay d-flex flex-column justify-content-center align-items-center">
+                                        <div className="card bg-dark text-white text-center border-0 overflow-hidden shadow-lg" style={{ maxWidth: '600px', borderRadius: '15px' }}>
+                                            {/* Fondo con gradiente y efecto de profundidad */}
+                                            <div style={{ 
+                                                position: 'absolute', 
+                                                top: 0, left: 0, right: 0, bottom: 0, 
+                                                background: 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)',
+                                                zIndex: 0
+                                            }}></div>
+                                            
+                                            <div className="card-body py-5 position-relative z-1 d-flex flex-column align-items-center">
+                                                <div className="mb-4" style={{ fontSize: '4rem', color: 'rgba(255,255,255,0.2)' }}>
+                                                    <i className="bi bi-file-earmark-pdf-fill"></i>
+                                                </div>
                                                 <h3 className="card-title fw-bold text-shadow mb-2">{doc.title || 'Boletín Oficial'}</h3>
-                                                <p className="card-text fs-5 text-shadow mb-4">Publicado: {dateFormatted}</p>
-                                                <a href="papelito.html" className="btn btn-rotary-gold px-4">Ver esta edición</a>
+                                                <p className="card-text fs-5 text-shadow mb-4" style={{ opacity: 0.8 }}>Publicado: {dateFormatted}</p>
+                                                <div className="d-flex gap-3">
+                                                    <a href={`papelito.html?id=${doc.id}`} className="btn btn-rotary-gold px-4 fw-bold">
+                                                        <i className="bi bi-eye me-2"></i>Ver esta edición
+                                                    </a>
+                                                    <a href={doc.pdf_url} target="_blank" rel="noopener" className="btn btn-outline-light px-3">
+                                                        <i className="bi bi-download"></i>
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

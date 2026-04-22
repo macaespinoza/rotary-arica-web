@@ -39,21 +39,51 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!response.ok) throw new Error("No se pudo cargar la lista de documentos");
             const data = await response.json();
             
+            if (!Array.isArray(data)) {
+                console.error("Data received is not an array:", data);
+                throw new Error("Formato de datos inválido");
+            }
+
             // Ordenar por fecha descendente
-            state.metadata = data.sort((a, b) => new Date(b.fechaPublicacion) - new Date(a.fechaPublicacion));
+            state.metadata = data.sort((a, b) => {
+                const dateA = a.fechaPublicacion ? new Date(a.fechaPublicacion) : new Date(0);
+                const dateB = b.fechaPublicacion ? new Date(b.fechaPublicacion) : new Date(0);
+                return dateB - dateA;
+            });
             
             renderSidebarList();
 
-            // Cargar el documento más reciente por defecto, si existe
-            if(state.metadata.length > 0) {
-                loadDocument(state.metadata[0]);
-            } else {
-                refs.documentList.innerHTML = '<p class="text-muted">No hay documentos disponibles.</p>';
+            // Buscar si viene un ID por parámetro
+            const urlParams = new URLSearchParams(window.location.search);
+            const targetId = urlParams.get('id');
+            let docToLoad = state.metadata[0];
+
+            if (targetId) {
+                const found = state.metadata.find(d => d.id === targetId || d.titulo === targetId);
+                if (found) docToLoad = found;
+            }
+
+            // Cargar el documento, si existe
+            if(docToLoad) {
+                // Si cargamos uno específico, asegúrate de marcarlo como activo en la lista
+                loadDocument(docToLoad);
+                document.querySelectorAll('.papelito-item').forEach(item => {
+                    if (item.textContent.includes(docToLoad.titulo)) {
+                        document.querySelectorAll('.papelito-item').forEach(i => i.classList.remove('active'));
+                        item.classList.add('active');
+                    }
+                });
+            } else if (state.metadata.length === 0) {
+                refs.documentList.innerHTML = '<p class="text-muted p-3">No hay documentos disponibles.</p>';
+                refs.currentTitle.textContent = "Sin documentos";
             }
 
         } catch (error) {
             console.error(error);
-            refs.documentList.innerHTML = '<div class="alert alert-danger">Error al cargar el catálogo de ediciones.</div>';
+            refs.documentList.innerHTML = `<div class="alert alert-danger p-3">
+                <strong>Error:</strong><br>
+                ${error.message || 'No se pudo cargar el catálogo.'}
+            </div>`;
         }
         
         setupEventListeners();
