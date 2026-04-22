@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { deleteGalleryImage } from './actions'
 
@@ -53,13 +53,11 @@ export default function GaleriaForm({ items }: { items: GalleryItem[] }) {
   }
 
   // Liberar memoria de previews al desmontar o cambiar
-  import('react').then((React) => {
-    React.useEffect(() => {
-      return () => {
-        previews.forEach(p => URL.revokeObjectURL(p))
-      }
-    }, [previews])
-  })
+  useEffect(() => {
+    return () => {
+      previews.forEach(p => URL.revokeObjectURL(p))
+    }
+  }, [previews])
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()

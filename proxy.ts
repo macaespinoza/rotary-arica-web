@@ -4,70 +4,59 @@ import { type NextRequest, NextResponse } from 'next/server'
 export async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname
 
-  // Si es la página de login, siempre pasar sin verificar
-  if (pathname === '/admin/login') {
-    return NextResponse.next()
-  }
-
-  // Solo procesamos las rutas de admin (excluyendo login)
+  // Solo procesamos rutas bajo /admin
   if (!pathname.startsWith('/admin')) {
     return NextResponse.next()
   }
 
-  // Verificar que las variables de entorno existen
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY
 
   if (!supabaseUrl || !supabaseKey) {
-    // Sin credenciales, redirigir al login para evitar crash
     const loginUrl = request.nextUrl.clone()
     loginUrl.pathname = '/admin/login'
     return NextResponse.redirect(loginUrl)
   }
 
-  try {
-    // Para rutas protegidas de /admin, construir cliente y verificar sesión
-    let supabaseResponse = NextResponse.next({
-      request: { headers: request.headers },
-    })
+  // Respuesta base que se irá actualizando si Supabase refresca cookies
+  let supabaseResponse = NextResponse.next({ request })
 
-    const supabase = createServerClient(
-      supabaseUrl,
-      supabaseKey,
-      {
-        cookies: {
-          getAll() {
-            return request.cookies.getAll()
-          },
-          setAll(cookiesToSet) {
-            cookiesToSet.forEach(({ name, value }) =>
-              request.cookies.set(name, value)
-            )
-            supabaseResponse = NextResponse.next({ request })
-            cookiesToSet.forEach(({ name, value, options }) =>
-              supabaseResponse.cookies.set(name, value, options)
-            )
-          },
-        },
-      }
-    )
+  const supabase = createServerClient(supabaseUrl, supabaseKey, {
+    cookies: {
+      getAll() {
+        return request.cookies.getAll()
+      },
+      setAll(cookiesToSet) {
+        cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value))
+        supabaseResponse = NextResponse.next({ request })
+        cookiesToSet.forEach(({ name, value, options }) =>
+          supabaseResponse.cookies.set(name, value, options)
+        )
+      },
+    },
+  })
 
-    // getUser() hace una llamada al servidor de Supabase para validar el token
-    const { data: { user } } = await supabase.auth.getUser()
+  // Usamos getClaims() — valida el JWT localmente sin llamada de red.
+  // Es más confiable en middleware que getUser() que requiere un round-trip a Supabase.
+  const { data, error } = await supabase.auth.getClaims()
 
-    if (!user) {
+  if (error || !data?.claims) {
+    if (pathname !== '/admin/login') {
       const loginUrl = request.nextUrl.clone()
       loginUrl.pathname = '/admin/login'
       return NextResponse.redirect(loginUrl)
     }
-
     return supabaseResponse
-  } catch {
-    // Si algo falla, redirigir al login en vez de crashear
-    const loginUrl = request.nextUrl.clone()
-    loginUrl.pathname = '/admin/login'
-    return NextResponse.redirect(loginUrl)
   }
+
+  // Si tiene sesión y está en login, redirigir al dashboard
+  if (pathname === '/admin/login') {
+    const dashboardUrl = request.nextUrl.clone()
+    dashboardUrl.pathname = '/admin'
+    return NextResponse.redirect(dashboardUrl)
+  }
+
+  return supabaseResponse
 }
 
 export const config = {
